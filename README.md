@@ -7,7 +7,7 @@ Allows you to easily collect Rails app performance metrics to a log file.
 This gem began as a way to easily collect performance metrics for Rails
 controller actions.
 
-"Why now just use statsd or NewRelic?" you might ask.
+"Why not use statsd or NewRelic?" you might ask.
 
 * I work in a [FISMA](http://en.wikipedia.org/wiki/Federal_Information_Security_Management_Act_of_2002)
   compliant workplace where we can't simply ship our logs off to NewRelic, or
@@ -39,3 +39,14 @@ There are currently only two config options:
 * `:event_subscriptions` - an array of regular expressions for matching which
   events you want to subscribe to via `ActiveSupport::Notifications`. The
   default is to simply subscribe to **all** `ActionController` events.
+
+The gem is currently in a very early pre-release stage where only the collection
+and storage of metrics is currently implemented. My next task is to work on
+reporting of those metrics, which I will also be doing in JSON, simply because
+it's a straight forward form that is easy to read and easy to write.
+
+I'm choosing to make this gem extremely bare and simple on purpose, only adding
+features beyond what I've just described as they are asked for and proven useful
+and not before. I think it's too easy to let the the desire for fancy charts
+and graphs override the reality that all that is really necessary is a simple
+tool that works well.
