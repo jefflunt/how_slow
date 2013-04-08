@@ -5,13 +5,20 @@ Allows you to easily collect Rails app performance metrics to a log file.
 ## Back story
 
 This gem began as a way to easily collect performance metrics for Rails
-controller actions without needing to integrate it with an external stats
-aggregation server or service. I started writing it because I work on Rails apps
-in an environment where it's not always easy or feasible to ship logs or other
-metrics data off to places to NewRelic, for reasons such as possible data
-security leakage. I have also been looking for a performance metrics solution
-that doesn't require a 3rd party service, or the installation of something like
-[statsd](https://github.com/etsy/statsd/) just to get up and running.
+controller actions.
+
+"Why now just use statsd or NewRelic?" you might ask.
+
+* I work in a [FISMA](http://en.wikipedia.org/wiki/Federal_Information_Security_Management_Act_of_2002)
+  compliant workplace where we can't simply ship our logs off to NewRelic, or
+  really **any** 3rd party for that matter, because of the potential data
+  security problems should a programming error result in sensitive data being
+  leaked to a 3rd party.
+* Most of the Rails apps I work on are maintained by 1-2 programmer teams, and
+  so as flashy and cool as all the metrics and performance analysis tools look
+  on the surface, we really just need to know a few basic facts about our apps'
+  performance. [statsd](https://github.com/etsy/statsd/), for example, would
+  be overkill.
 
 In other words, I needed a simple way to capture performnace metrics for simple
 Rails apps, without a lot of trouble, and without potentially exposing log data
