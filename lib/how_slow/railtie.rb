@@ -17,7 +17,7 @@ module HowSlow
 
   class Railtie < Rails::Railtie
     initializer "railtie.configure_rails_initialization" do |app|
-      @logger = Logger.new(@config[:log_file])
+      @logger = Logger.new(HowSlow.config[:log_file])
 
       @config[:event_subscriptions].each do |event_name|
         ActiveSupport::Notifications.subscribe event_name do |name, start, finish, id, payload|
