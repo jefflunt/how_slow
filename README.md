@@ -28,7 +28,7 @@ All metrics are written as serialized JSON, one line per action, to the file
 
 There are currently only two config options:
 
-* log_file - changes the name of the file where the metrics are written
-* event_subscriptions - an array of regular expressions for matching which
+* `:log_file` - changes the name of the file where the metrics are written
+* `:event_subscriptions` - an array of regular expressions for matching which
   events you want to subscribe to via `ActiveSupport::Notifications`. The
   default is to simply subscribe to all `ActionController` events.
