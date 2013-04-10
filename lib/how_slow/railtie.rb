@@ -2,7 +2,8 @@ module HowSlow
   # Configuration defaults
   @config = {
               :log_file => "metrics.log",
-              :event_subscriptions => [/process_action.action_controller/]
+              :event_subscriptions => [/process_action.action_controller/],
+              :logger_filename => nil
             }
   @valid_config_keys = @config.keys
   @logger = nil
@@ -17,7 +18,8 @@ module HowSlow
 
   class Railtie < Rails::Railtie
     initializer "railtie.configure_rails_initialization" do |app|
-      @logger = Logger.new("#{Rails.root}/log/#{HowSlow.config[:log_file]}")
+      config[:logger_filename] = "#{Rails.root}/log/#{HowSlow.config[:log_file]}"
+      @logger = Logger.new(config[:logger_filename])
 
       HowSlow.config[:event_subscriptions].each do |event_name|
         ActiveSupport::Notifications.subscribe event_name do |name, start, finish, id, payload|
