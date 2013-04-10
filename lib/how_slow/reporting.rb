@@ -4,13 +4,22 @@ module HowSlow
     'counters' => []
   }
  
-  # Will return the slowest actions whose datetime is between reject_older_than < x < Time.now
-  # The list is truncated to a maximum of number_of_oldest
+  # Gives you a list of the slowest actions by total_runtime, most slow first.
   #
-  # reject_older_than - you should pass in a value like "7.days.ago" or "5.hours.ago", etc. The default value
-  #   is 7.days.ago, and will return actions from the previous 7 days up until the current time.
-  # number_of_slowest - the maximum number of events you want in the list returned. You should pass integers
-  #   >= 1 for this argument
+  # So, if you have the following set of action metrics...
+  #
+  #   {'type':'action', 'total_runtime':123.0, ... }
+  #   {'type':'action', 'total_runtime':456.7, ... }
+  #   {'type':'action', 'total_runtime':99.0,  ... }
+  #   {'type':'counter', ... }
+  #   {'type':'action', 'total_runtime':3.0,   ... }
+  # 
+  # ...then
+  #   slowest_actions(nil, 2)
+  #   => [{'type':'action', 'total_runtime':456.7}, {'type':'action', 'total_runtime':123.0}]A
+  #
+  # So, you get an array of 'action' typ
+  # 
   def slowest_actions(reject_older_than=7.days.ago, number_of_slowest=5)
     rebuild_metrics(days_in_past)
     sorted_metrics = @metrics['actions'].sort_by!{|action| action['total_runtime']}
