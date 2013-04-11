@@ -21,7 +21,7 @@ module HowSlow
   # So, you get an array of 'action' typ
   # 
   def self.slowest_actions(reject_older_than=7.days.ago, number_of_slowest=5)
-    rebuild_metrics(days_in_past)
+    rebuild_metrics(reject_older_than)
     sorted_metrics = @metrics['actions'].sort_by!{|action| action['total_runtime']}
     sorted_metrics.last(number_of_slowest).reverse
   end
