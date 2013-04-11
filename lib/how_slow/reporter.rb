@@ -31,7 +31,7 @@ module HowSlow
       @metrics['actions'] = []
       @metrics['counters'] = []
 
-      all_logged_metrics = File.read(HowSlow.full_path_to_log_file).lines.each{|line| JSON.parse(line)}
+      all_logged_metrics = File.read(HowSlow.full_path_to_log_file).lines.each{|line| JSON.parse(line) unless line.start_with?("#")}
       all_logged_metrics.reject!{|metric| Time.parse(metric['datetime']) < reject_older_than} unless reject_older_than.nil?
       all_logged_metrics.each{|metric| @metrics[metric['type']].push(metric)}
     end
