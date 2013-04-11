@@ -35,7 +35,7 @@ module HowSlow
       puts all_logged_metrics.class
       puts all_logged_metrics.first.inspect
       puts all_logged_metrics.inspect
-      all_logged_metrics.reject!{|metric| Time.parse(metric['datetime']) < reject_older_than} unless reject_older_than.nil?
+      all_logged_metrics.reject!{|metric| metric.nil? or Time.parse(metric['datetime']) < reject_older_than} unless reject_older_than.nil?
       all_logged_metrics.each{|metric| @metrics[metric['type']].push(metric)}
     end
 end
