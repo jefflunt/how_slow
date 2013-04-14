@@ -74,7 +74,7 @@ module HowSlow
     all_logged_metrics.reject!{|metric| Time.parse(metric['datetime']) < reject_older_than} unless reject_older_than.nil?
     all_logged_metrics.each{|metric| @metrics[metric['type']] << metric}
 
-    @metrics['latest_rebuilt_runtime'] = (Time.now-rebuild_start_time)*1000
+    @metrics['rebuild_runtime'] = (Time.now-rebuild_start_time)*1000
 
     @metrics
   end
