@@ -52,7 +52,9 @@ Currently `how_slow` only supports two configuration options.
 
 * `:event_subscriptions` - an array of regex patters used to match actions. For
   more on how that works, see the documentation on
-  [ActiveSupport::Notifications Subscribers][3]
+  [ActiveSupport::Notifications Subscribers][3]. `how_slow` will default to
+  tracking **all** controller actions automatically if you don't explicitly set
+  this option.
 * `:logger_filename` - the name of the file to write the metrics logs. The
   default is `metrics.log`, which winds up placing the file under
   `"#{Rails.root}/log/metrics.log"`
@@ -60,7 +62,7 @@ Currently `how_slow` only supports two configuration options.
 ## Getting your metrics data
 
 After collecting your app metrics data how do you get useful data back? Right
-now, in the gems early days, you can only get back either a hash of every single
+now, in the gem's early days, you can only get back either a hash of every single
 metric that has been recorded by your app, or a list of the slowest actions.
 Simply call...
 
@@ -122,17 +124,17 @@ giving you a simple, actionable report that costs you basically nothing.
     to massage the data that comes out of `how_slow` so that it will fit into
     the time series charting library of your choice then that's all well and
     good. However, in order to keep `how_slow` simple I think it's best not to
-    marry it to any specific charting solution. Also, I don't thing `how_slow`
+    marry it to any specific charting solution. Also, I don't think `how_slow`
     should concern itself with anything other than collection and very simple
     reporting/filting of metrics data.
 * If this uses a log file can I use this on [Heroku][6]?
-  * Sure, but until and unless other data storage methods are added you will
-    need to manually copy your log file to someplace more permanent due to
-    Heroku's [read-only (a.k.a. ephemeral) file system][7] otherwise it will get
-    periodically erased at [Heroku's][6] whim.
+  * Sure, but you will need to periodically copy your log file to someplace more
+    permanent due to Heroku's [read-only (a.k.a. ephemeral) file system][7]
+    or else it may get deleted at [Heroku's][6] whim.
+
 ## Thanks!
 
-Thanks for checking out `how_slow`. It is still in its early days.
+Thanks for checking out `how_slow`.
 
 [1]: http://en.wikipedia.org/wiki/Federal_Information_Security_Management_Act_of_2002
 [2]: https://github.com/etsy/statsd/
