@@ -75,5 +75,7 @@ module HowSlow
     all_logged_metrics.each{|metric| @metrics[metric['type']] << metric}
 
     @metrics['latest_rebuilt_runtime'] = (Time.now-rebuild_start_time)*1000
+
+    @metrics
   end
 end
