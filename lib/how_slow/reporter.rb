@@ -1,11 +1,12 @@
 require 'active_support/hash_with_indifferent_access'
 
 module HowSlow
-  @metrics = HashWithIndifferentAccess.new({
+  @initial_state = HashWithIndifferentAccess.new({
     :action => [],
     :counter => []
   })
 
+  @metrics = @initial_state
   # Returns a hash of the metrics that have been logged to the log file. The 
   # metics must first be built by callng the `rebuld_metrics` method. The
   # reason you must call `rebuild_metrics` by hand is to separate the task of
@@ -49,11 +50,7 @@ module HowSlow
   # old metrics for garbage collection. This method is primarily for freeing up
   # memory.
   def self.reset_metrics
-    @metrics = HashWithIndifferentAccess.new({
-      :action => [],
-      :counter => []
-    })
-    @metrics
+    @metrics = @initial_state
   end
  
   # Gives you a list of the slowest actions by :total_runtime, slowest first,
@@ -95,8 +92,7 @@ module HowSlow
   # ActiveSupport::HashWithIndifferentAccess
   #
   def self.rebuild_metrics
-    @metrics[:action] = []
-    @metrics[:counter] = []
+    @metrics = @initial_state
 
     all_logged_metrics = []
     all_logged_lines = File.read(HowSlow.full_path_to_log_file).lines
