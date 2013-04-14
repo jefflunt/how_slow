@@ -86,8 +86,8 @@ module HowSlow
   # days.
   # 
   def self.slowest_actions(number_of_actions=5, keep_since=nil)
-    sorted_metrics = keep_since.nil? ? @metrics : @metrics[:action].reject{|metric| Time.parse(metric['datetime']) < keep_since}
-    sorted_metrics = sorted_metrics[:action].sort_by{|action| action['total_runtime']}
+    sorted_metrics = keep_since.nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric['datetime']) < keep_since}
+    sorted_metrics = sorted_metrics.sort_by{|action| action['total_runtime']}
     sorted_metrics.last(number_of_actions).reverse
   end
 
