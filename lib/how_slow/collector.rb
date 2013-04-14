@@ -1,4 +1,39 @@
 module HowSlow
+  # Defines a Railtie that loades the metrics collector into your Rails app upon
+  # app initialization.
+  #
+  # This class takes care of logging all the metrics data. It currently supports
+  # only a single metric type, the 'action' type (as in a controller action).
+  # For now every controller action in your entire app is captured and timed.
+  # Every metric recorded logs the following info into the metrics log file as
+  # a JSON string.
+  #
+  #   {
+  #     'datetime': [the time the action was triggered],
+  #     'type': 'action',
+  #     'event_name': 'all_requests',
+  #     'status': [the HTTP status code returned],
+  #     'total_runtime': [total time to process the controller action],
+  #     'db_runtime':    [time spent in DB operatations],
+  #     'view_runtime':  [time spent rendering the view],
+  #     'other_runtime': [total_runtime - db_runtime - view_runtime],
+  #     'params': [the params hash sent to the controller action]
+  #   }
+  #
+  # All timing attributes are in miiliseconds, and stored as a floating point
+  # value (meaning fractional milliseconds are also included).
+  #
+  # NOTE that the 'view_runtime' and 'db_runtime' attributes may be zero if, for
+  # example, the action redirected instead of reading from the database and/or
+  # rendering a view to the client. It should also be noted that any database
+  # calls triggered by code in the view (such as loading associated records that
+  # were not eager loaded in the controller action itself) count as time against
+  # the view, NOT the database time. This often throws people off, but the point
+  # seems to be to direct you to which step in the response process is involved
+  # in eating up what amount of time. Finally the 'other_runtime' attribute is
+  # simply whatever time if leftover from 'total_runtime' after you subtract
+  # 'view_runtime' and 'db_runtime'.
+  #
   class Railtie < Rails::Railtie
     initializer "railtie.configure_rails_initialization" do |app|
       @logger = Logger.new(HowSlow.full_path_to_log_file)
