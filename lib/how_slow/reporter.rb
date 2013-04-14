@@ -8,7 +8,11 @@ module HowSlow
 
   # Returns a hash of the metrics that have been logged to the log file. The 
   # metics must first be built by callng the `rebuld_metrics` method. The
-  # structure of the returned hash is:
+  # reason you must call `rebuild_metrics` by hand is to separate the task of
+  # collecting and constantly updating metrics from the reporting of the metrics
+  # at a given point in time.
+  #
+  # The structure of the returned hash is:
   #
   #   {
   #     :action => [
