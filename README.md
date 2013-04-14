@@ -1,7 +1,7 @@
 # how_slow
 
 Easily collect Rails app performance metrics without relying on 3rd party
-services or setting a separate logging server.
+services or setting up a separate logging server.
 
 ## Why?
 
@@ -70,11 +70,11 @@ Simply call...
 
     HowSlow.slowest_actions(10, 7.days_ago)
 
-...where the first parameter tells `how_slow` to give me only the 10 slowest
-actions within the last 7 days. Both of these arguments are optional. If you
-specify no arguments then by default `how_slow` will tell you the slowest 5
-actions of all time (not terribly userful, so you probably want to time-limit
-the returned list).
+...where these parameters tell `how_slow` to give me only the 10 slowest actions
+within the last 7 days. Both of these arguments are optional. If you specify no
+arguments then by default `how_slow` will tell you the slowest 5 actions of all
+time (not terribly userful, so you probably want to time-limit the returned
+list).
 
 To get the full list of all metrics recorded by `how_slow`, simply call...
 
@@ -110,7 +110,7 @@ giving you a simple, actionable report that costs you basically nothing.
     metrics for garbage collection. Alternatively you could just use the simple
     reporting methods during low load times, or ship the log off to somewhere
     else to be analyzed.
-* Why not write the logs to a database or [redis][9] or something more that a
+* Why not write the logs to a database or [redis][8] or something more that a
   flat file?
   * Well, for one, performance and simplicity are top priorities.
   * On the other hand, I'd like to add support for that sort of thing in the
