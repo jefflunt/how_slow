@@ -1,8 +1,10 @@
+require 'active_support/hash_with_indifferent_access'
+
 module HowSlow
-  @metrics = HashWithIndifferentAccess{
+  @metrics = HashWithIndifferentAccess.new({
     :action => [],
     :counter => []
-  }
+  })
 
   # Returns a hash of the metrics that have been logged to the log file. The 
   # metics must first be built by callng the `rebuld_metrics` method. The
