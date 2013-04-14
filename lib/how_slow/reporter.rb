@@ -12,21 +12,27 @@ module HowSlow
   #
   #   {
   #     :action => [
-  #       {'type' => :action, ... },
-  #       {'type' => :action, ... },
+  #       { ...first 'action' metric... },
+  #       { ...second 'action' metric... },
   #       ...
   #     ],
   #     :counter => [
-  #       {'type' => :counter, ...},
+  #       { ...first 'counter' metric... },
+  #       { ...second 'counter' metric... },
   #       ...
   #     ]
   #   }
   #
+  # NOTE that the 'type' attribute of the logged metrics is discarded when being
+  # inserted into the metrics hash. This is because all metrics are placed under
+  # a key that identifies their type as recorded in the metrics log, and keeping
+  # that key in the metrics hash as well would be redundant.
+  #
   # The order of the metrics under each metric type key (:action, or :counter)
   # is the same as the order in which they were written to the log file. NOTE
   # that this doesn't mean they're in perfect chronological order by the
-  # datetime of the action since long-running actions, multiple threads,  or
-  # multiple app server instances, all writing to the same log file can result
+  # datetime of the action since long-running actions, multiple threads, or
+  # multiple app server instances that all write to the same log file can result
   # in metrics being logged somewhat out of strict chronological order. If you
   # need the metrics to be in ANY kind of strict order you should enforce this
   # yourself by sorting them by the attribute(s) that matters to you.
@@ -36,9 +42,10 @@ module HowSlow
   end
  
   # Gives you a list of the slowest actions by :total_runtime, slowest first,
-  # filtered to metrics recorded between now and keep_since time ago.
+  # filtered to metrics recorded between now and keep_since time ago, and
+  # limited to a maximum number by the number_of_actions argument.
   #
-  # So, if you have the following set of action metrics in the log file...
+  # So, if you have the following set of metrics in the log file...
   #
   #   {'type':'action', 'total_runtime':123.0, ... }
   #   {'type':'action', 'total_runtime':456.7, ... }
@@ -49,8 +56,11 @@ module HowSlow
   # ...then
   #
   #   slowest_actions(2)
-  #   => [{:type => 'action', :total_runtime => 456.7}, 
-  #       {:type => 'action', :total_runtime => 123.0}]
+  #   => [{:total_runtime => 456.7, ... },
+  #       {:total_runtime => 123.0, ... }]
+  #
+  # Notice that the 'counter' metric type is ignored by this method since the
+  # purpose here is to get a list of the slowest actions.
   #
   # The default number_of_actions to return is 5 and it determines the maximum
   # number of metrics that will be returned by this method.
@@ -73,11 +83,13 @@ module HowSlow
     @metrics[:action] = []
     @metrics[:counter] = []
 
-    all_logged_lines = File.read(HowSlow.full_path_to_log_file).lines
     all_logged_metrics = []
+    all_logged_lines = File.read(HowSlow.full_path_to_log_file).lines
     all_logged_lines.each{|line| all_logged_metrics << JSON.parse(line) unless line.start_with?('#')}
-    all_logged_metrics.reject!{|metric| Time.parse(metric['datetime']) < reject_older_than} unless reject_older_than.nil?
-    all_logged_metrics.each{|metric| @metrics[metric['type']] << metric}
+    all_logged_metrics.each do |metric|
+      type = metric.delete('type')
+      @metrics[type] << metric
+    end
 
     @metrics
   end
