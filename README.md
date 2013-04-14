@@ -1,6 +1,7 @@
 # how_slow
 
-Allows you to easily collect Rails app performance metrics to a log file.
+Easily collect Rails app performance metrics without relying on 3rd party
+services or setting a separate logging server.
 
 ## Why?
 
@@ -88,9 +89,27 @@ giving you a simple, actionable report that costs you basically nothing.
 
 ## FAQ
 
-* If this uses a log file can I use this on [Heroku][6]?
-  * Sure, but for now you will need to manually copy your log file to someplace
-    more permanent due to Heroku's [read-only (a.k.a. ephemeral) file system][7].
+* Is this appropriate for prodcution use? Will there be much overhead?
+  * Yes, it's appropriate for production use. Performance metrics are only
+    really useful IMHO if they are measuring your actual production system.
+  * It's hard to say exactly how much overhead it will add, but it certainly
+    WON'T add any more overhead than the Rails logs already do. We're talking
+    single-digit millisecond (and often sub-millisecond) overhead per action.
+  * Running the simple reporting methods may take a little more time, and is
+    dependent largely on the size of your log file. The more data in your log
+    the longer it will take to report on it. For anything but gigabytes of logs,
+    however, we're talking about seconds (not minutes) to report on the data,
+    so long as you have enough free memory on your server to do so. The simple
+    reporting methods provided will read your entire log file into memory,
+    though the logger itself does not keep a running list of metrics as it is
+    logging, so its memory use is essentially nothing and should not increase
+    over time.
+  * If memory usage is a concern on your production system you can use the
+    `HowSlow.reset_metrics` method to set the in-memory reporting metrics to
+    an empty hash (after you've read them, of course), thereby marking the old
+    metrics for garbage collection. Alternatively you could just use the simple
+    reporting methods during low load times, or ship the log off to somewhere
+    else to be analyzed.
 * Why not write the logs to a database or [redis][9] or something more that a
   flat file?
   * Well, for one, performance and simplicity are top priorities.
@@ -106,7 +125,11 @@ giving you a simple, actionable report that costs you basically nothing.
     marry it to any specific charting solution. Also, I don't thing `how_slow`
     should concern itself with anything other than collection and very simple
     reporting/filting of metrics data.
-
+* If this uses a log file can I use this on [Heroku][6]?
+  * Sure, but until and unless other data storage methods are added you will
+    need to manually copy your log file to someplace more permanent due to
+    Heroku's [read-only (a.k.a. ephemeral) file system][7] otherwise it will get
+    periodically erased at [Heroku's][6] whim.
 ## Thanks!
 
 Thanks for checking out `how_slow`. It is still in its early days.

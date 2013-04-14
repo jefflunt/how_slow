@@ -44,6 +44,17 @@ module HowSlow
   def self.metrics
     @metrics
   end
+
+  # Sets the in-memory reporting metrics to an empty set, thereby marking any
+  # old metrics for garbage collection. This method is primarily for freeing up
+  # memory.
+  def self.reset_metrics
+    @metrics = HashWithIndifferentAccess.new({
+      :action => [],
+      :counter => []
+    })
+    @metrics
+  end
  
   # Gives you a list of the slowest actions by :total_runtime, slowest first,
   # filtered to metrics recorded between now and keep_since time ago, and
