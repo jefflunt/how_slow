@@ -4,7 +4,7 @@ require File.expand_path('../lib/how_slow/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Jeff Lunt"]
   gem.email         = ["jefflunt@gmail.com"]
-  gem.description   = %q{You too can easily collect Rails app performance metrics without relying on 3rd party services or setting a separate logging server!}
+  gem.description   = %q{You too can easily collect Rails app performance metrics without relying on 3rd party services or setting up a separate logging server!}
   gem.summary       = %q{Collect Rails performance metrics without 3rd party services or extra servers.}
   gem.homepage      = 'https://github.com/normalocity/how_slow'
 
