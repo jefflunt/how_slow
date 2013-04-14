@@ -3,8 +3,11 @@ module HowSlow
   # app initialization.
   #
   # This class takes care of logging all the metrics data. It currently supports
-  # only a single metric type, the 'action' type (as in a controller action).
-  # For now every controller action in your entire app is captured and timed.
+  # only a single metric type, the 'action' type (as in a controller action),
+  # but there is a placeholder metric type called 'counter`, to later be used
+  # to track, for example, usage stats of an app.
+  #
+  # By default every controller action in your entire app is captured and timed.
   # Every metric recorded logs the following info into the metrics log file as
   # a JSON string.
   #
@@ -20,8 +23,22 @@ module HowSlow
   #     'params': [the params hash sent to the controller action]
   #   }
   #
+  # An actual metric might look like the following:
+  #
+  #   {
+  #     'datetime':'2013-01-05 23:01:65 UTC',
+  #     'type':'action',
+  #     'event_name':'all_requests',
+  #     'status':200,
+  #     'total_runtime':2.420   # all times are in milliseconds
+  #     'db_runtime':1.001,
+  #     'view_runtime':0.972,
+  #     'other_runtime':0.477,
+  #     'params':'{:controller' => 'home', :action => 'index'}
+  #   }
+  #
   # All timing attributes are in miiliseconds, and stored as a floating point
-  # value (meaning fractional milliseconds are also included).
+  # value.
   #
   # NOTE that the 'view_runtime' and 'db_runtime' attributes may be zero if, for
   # example, the action redirected instead of reading from the database and/or
