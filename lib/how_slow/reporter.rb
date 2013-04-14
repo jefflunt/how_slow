@@ -50,8 +50,7 @@ module HowSlow
   #       {'type':'action', 'total_runtime':123.0}]
   # 
   def self.slowest_actions(reject_older_than=7.days.ago, number_of_slowest=5)
-    rebuild_metrics(reject_older_than)
-    sorted_metrics = @metrics['actions'].sort_by!{|action| action['total_runtime']}
+    sorted_metrics = @metrics['action'].sort_by{|action| action['total_runtime']}
     sorted_metrics.last(number_of_slowest).reverse
   end
 
@@ -63,18 +62,14 @@ module HowSlow
   # file goes.
   #
   def self.rebuild_metrics(reject_older_than=nil)
-    rebuild_start_time = Time.now
-
-    @metrics['actions'] = []
-    @metrics['counters'] = []
+    @metrics['action'] = []
+    @metrics['counter'] = []
 
     all_logged_lines = File.read(HowSlow.full_path_to_log_file).lines
     all_logged_metrics = []
     all_logged_lines.each{|line| all_logged_metrics << JSON.parse(line) unless line.start_with?('#')}
     all_logged_metrics.reject!{|metric| Time.parse(metric['datetime']) < reject_older_than} unless reject_older_than.nil?
     all_logged_metrics.each{|metric| @metrics[metric['type']] << metric}
-
-    @metrics['rebuild_runtime'] = (Time.now-rebuild_start_time)*1000
 
     @metrics
   end
