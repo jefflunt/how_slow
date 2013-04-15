@@ -110,8 +110,6 @@ class ReporterTest < MiniTest::Unit::TestCase
 
     def test_specifying_a_time_limite_on_slow_metrics_will_limit_metrics_to_metrics_more_recent_than_that_time_limit
       Time.stubs(:now).returns(Time.parse("2013-01-08 12:10:00 UTC"))
-puts Time.now
-puts (Time.now.utc-3.minutes).utc.to_s
       HowSlow.rebuild_metrics
       assert_equal HowSlow.metrics[:action].last(3), HowSlow.slowest_actions(99, (Time.now.utc-3.minutes).utc.to_s)
     end
