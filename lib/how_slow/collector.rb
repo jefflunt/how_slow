@@ -62,7 +62,7 @@ module HowSlow
           event_metrics = {}
           event_metrics['datetime'] = Time.now.to_s
           event_metrics['type'] = 'action'
-          event_metrics['event_name'] = 'all_requests'
+          event_metrics['event_name'] = event_name
           event_metrics['status'] = payload[:status]
           
           total_runtime = event_metrics['total_runtime'] = (finish-start)*1000
