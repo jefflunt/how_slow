@@ -1,3 +1,5 @@
+require 'rails'
+
 module HowSlow
   # Defines a Railtie that loades the metrics collector into your Rails app upon
   # app initialization.

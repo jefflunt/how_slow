@@ -1,0 +1,10 @@
+require 'rubygems'
+require 'active_support'
+require 'active_support/core_ext'
+require 'minitest/autorun'
+require 'json'
+require 'turn'
+require 'minitest/unit'
+require 'mocha/setup'
+
+require 'how_slow'

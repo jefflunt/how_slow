@@ -1,5 +1,5 @@
-require File.join(File.dirname(__FILE__), 'how_slow', 'version')
-require File.join(File.dirname(__FILE__), 'how_slow', 'setup')
-require File.join(File.dirname(__FILE__), 'how_slow', 'collector')
-require File.join(File.dirname(__FILE__), 'how_slow', 'reporter')
+require 'how_slow/version'
+require 'how_slow/setup'
+require 'how_slow/collector'
+require 'how_slow/reporter'
 

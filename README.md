@@ -89,6 +89,13 @@ With these simple lines of code you should be able to easily build email-based
 reporters that send you an automated email via a cron+rake task once a week,
 giving you a simple, actionable report that costs you basically nothing.
 
+## Testing
+
+If you want to run the tests for this gem do the following:
+
+    bundle install
+    bundle exec ruby test/**/*
+
 ## FAQ
 
 * Is this appropriate for prodcution use? Will there be much overhead?
