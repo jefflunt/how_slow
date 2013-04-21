@@ -2,12 +2,12 @@ module HowSlow
   # Configuration defaults
   @config = {
               :event_subscriptions => [/process_action.action_controller/],
-              :logger_filename => "metrics.log"
+              :logger_filename => "metrics.log",
+              :storage => :log_file
             }
   @valid_config_keys = @config.keys
-  @logger = nil
 
-  # Allows you to configure the gem's options. Currently supported options are:
+  # Currently supported configuration options:
   #
   # :event_subscriptions - the list of patterns that will be captured be default
   # by the collector
@@ -15,11 +15,13 @@ module HowSlow
   # :logger_filename - the name of the file to which collected metrics will be
   # written. If this is set to "metrics.log" (the default), then the file will
   # be written to `#{Rails.root}/log/metrics.log`
+  #
   def self.configure(opts = {})
     opts.each {|k,v| @config[k.to_sym] = v if @valid_config_keys.include? k.to_sym}
   end
 
   # Returns a hash of the gem's configuration options.
+  #
   def self.config
     @config
   end
