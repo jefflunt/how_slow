@@ -29,16 +29,29 @@ module HowSlow
     attr_reader :metrics
     @metrics
 
-    def intitialize
+    def initialize
       @metrics = HashWithIndifferentAccess.new({
         :action => [],
         :counter => []
       })
+
+      all_logged_metrics = []
+      all_logged_lines = File.read(HowSlow.full_path_to_log_file).lines
+      all_logged_lines.each{|line| all_logged_metrics << JSON.parse(line).to_hash.symbolize_keys! unless line.start_with?('#')}
+      binding.pry
+      all_logged_metrics.each do |metric_hash|
+        type_name = metric_hash.delete(:type_name)
+        case type_name
+        when 'action' then @metrics[type_name] << HowSlow::Metrics::Action.new(metric_hash)
+        when 'counter' then @metrics[type_name] << HowSlow::Metrics::Counter.new(metric_hash)
+        end
+      end
     end
 
-    # Gives you a list of the slowest actions by :total_runtime, slowest first,
-    # filtered to metrics recorded between now and keep_since time ago, and
-    # limited to a maximum number by the number_of_actions argument.
+    # Gives you a list of the slowest actions by `measurement`, slowest first,
+    # filtered to metrics recorded between now and `keep_since` time ago, and
+    # further limited to a maximum number of results as specified by by the 
+    # `number_of_actions` argument.
     #
     # So, if you have the following set of metrics in the log file...
     #
@@ -50,41 +63,27 @@ module HowSlow
     # 
     # ...then
     #
-    #   slowest_actions(2)
+    #   slowest_actions_by(:total_runtime, 2)
     #   => [{:total_runtime => 456.7, ... },
     #       {:total_runtime => 123.0, ... }]
+    #
+    # All attributes that you can sort by are:
+    #   :total_runtime, :db_runtime, :view_runtime, :other_runtime
     #
     # Notice that the 'counter' metric type is ignored by this method since the
     # purpose here is to get a list of the slowest actions.
     #
-    # The default number_of_actions to return is 5 and it determines the maximum
-    # number of metrics that will be returned by this method.
+    # The default `number_of_actions` is 5.
     #
-    # The default keep_since value is nil, indicating that ALL logged metrics
-    # should be considered. Pass in a value such as 7.days.ago to limit the
-    # returned metrics to those whose :datetime attribute is within the last 7
-    # days.
+    # The default `keep_since` value is nil, indicating that ALL logged metrics
+    # should be considered. Pass in a value such as 7.days.ago. If you'd prefer
+    # to get the slowest metrics of all time, pass a value of `nil` for this
+    # argument.
     # 
-    def self.slowest_actions(number_of_actions=5, keep_since=nil)
-      sorted_metrics = keep_since.nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric['datetime']) < keep_since}
-      sorted_metrics = sorted_metrics.sort_by{|action| action['total_runtime']}
+    def slowest_actions_by(measurement, number_of_actions=5, keep_since=7.days.ago)
+      sorted_metrics = keep_since.nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric.datetime) < keep_since}
+      sorted_metrics = sorted_metrics.sort_by{|action| action.send(measurement)}
       sorted_metrics.last(number_of_actions).reverse
-    end
-
-    private
-
-    def rebuild_metrics
-      @metrics = @initial_state.call
-
-      all_logged_metrics = []
-      all_logged_lines = File.read(HowSlow.full_path_to_log_file).lines
-      all_logged_lines.each{|line| all_logged_metrics << JSON.parse(line) unless line.start_with?('#')}
-      all_logged_metrics.each do |metric|
-        type = metric.delete('type')
-        @metrics[type] << metric
-      end
-
-      @metrics
     end
   end
 end
