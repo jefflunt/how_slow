@@ -1,5 +1,5 @@
 module HowSlow
-  module Metric
+  module Metrics
     # The base metric.
     #
     class Base
@@ -14,7 +14,7 @@ module HowSlow
       @meta         # A hash for any other information stored with this metric
 
       def initialize(params_hash)
-        params_hash.keys.each{|k,v| send("#{k}=",v)}
+        params_hash.each {|k,v| instance_variable_set("@#{k}", v) }
         @type_name = 'metric'
       end
 
@@ -23,7 +23,8 @@ module HowSlow
       #
       def as_json
         hash = {}
-        self.instance_variables.each{|var| hash[var] = self.instance_variable_get var
+        instance_variables.each{|var| hash[var.to_s.gsub(/@/, '')] = instance_variable_get var}
+        hash
       end
     end
   end

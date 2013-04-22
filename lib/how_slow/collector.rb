@@ -45,7 +45,8 @@ module HowSlow
 
     initializer "railtie.configure_rails_initialization" do |app|
       case HowSlow.config[:storage]
-      when :log_file setup_log_storage_and_reporting
+      when :log_file then Collector.setup_log_storage_and_reporting
+      end
     end
 
     def self.setup_log_storage_and_reporting
@@ -56,10 +57,7 @@ module HowSlow
           total_runtime = (finish-start)*1000
           db_runtime = payload[:db_runtime] || 0.0 
           view_runtime = payload[:view_runtime] || 0.0 
- 
-          # TODO add initialization of Ruby object
-          # Then serialize it using as_json.to_json
-          # then write it to the file
+
           metric = HowSlow::Metrics::Action.new(
             :datetime => Time.now,
             :event_name => event_name,
@@ -70,11 +68,11 @@ module HowSlow
             :other_runtime => total_runtime-db_runtime-view_runtime,
             :params => payload[:params]
           )
-          
-          @logger.info(metric.as_json.to_json
+
+          @logger.info(metric.as_json.to_json)
         end
       end
-
     end # setup_log_storage_and_reporting
+
   end # Collector class
 end # HowSlow module
