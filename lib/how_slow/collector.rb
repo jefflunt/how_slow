@@ -69,10 +69,32 @@ module HowSlow
             :params => payload[:params]
           )
 
-          @logger.info(metric.as_json.to_json)
+          record_metric(metric)
         end
       end
     end # setup_log_storage_and_reporting
 
+    # Makes an entry for a named counter event. This method will take care of
+    # constructing a Counter metric around the two values you pass in.
+    #
+    # `event_name` - the name of the event
+    # `count` - the count at this time
+    #
+    def self.count(event_name, count)
+      metric = HowSlow::Metrics::Counter.new(
+        :datetime => Time.now,
+        :event_name => event_name,
+        :count => count
+      )
+
+      record_metric(metric)
+   end
+    
+    private
+    def self.record_metric(metric)
+      case HowSlow.config[:storage]
+      when :log_file then @logger.info(metric.as_json.to_json)
+      end
+     end
   end # Collector class
 end # HowSlow module

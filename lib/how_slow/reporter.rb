@@ -38,7 +38,6 @@ module HowSlow
       all_logged_metrics = []
       all_logged_lines = File.read(HowSlow.full_path_to_log_file).lines
       all_logged_lines.each{|line| all_logged_metrics << JSON.parse(line).to_hash.symbolize_keys! unless line.start_with?('#')}
-      binding.pry
       all_logged_metrics.each do |metric_hash|
         type_name = metric_hash.delete(:type_name)
         case type_name
@@ -84,6 +83,11 @@ module HowSlow
       sorted_metrics = keep_since.nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric.datetime) < keep_since}
       sorted_metrics = sorted_metrics.sort_by{|action| action.send(measurement)}
       sorted_metrics.last(number_of_actions).reverse
+    end
+
+    def sum_counters_by(event_name, keep_since=7.days.ago)
+      filtered_metrics = keep_since.nil? ? @metrics[:counter] : @metrics[:counter].reject{|metric| Time.parse(metric.datetime) < keep_since}
+      filtered_metrics.size == 0 ? 0 : filtered_metrics.collect{|metric| metric.count}.reduce(:+)
     end
   end
 end
