@@ -159,7 +159,8 @@ If you want to run the tests for this gem do the following:
     so long as you have enough free memory on your server to do so. The memory
     issue can be addressed in two ways: rotate your logs regularly and only
     store recent data, or wait until [ActiveRecord storage][10] is added so you
-    can write your own, arbitrarily complex metrics reports.
+    can write your own, arbitrarily complex metrics reports straight from your
+    database.
 * **Why not write the logs to a database or [redis][8] or something more that a
   flat file?**
   * First of all, performance and simplicity are top priorities.
