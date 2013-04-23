@@ -22,6 +22,8 @@ controller actions.
 * I don't like the idea of having to maintain a [statsd][2] server along with
   a generic graphing/charting software stack, just to get some basic usage and
   performance numbers from my apps.
+* I also don't enjoy needing to go to SQL or the Rails console to get this
+  information. `how_slow` is a **great** middle ground.
 
 ## Installing
 
