@@ -171,16 +171,15 @@ If you want to run the tests for this gem do the following:
     to massage the data that comes out of `how_slow` so that it will fit into
     the time series charting library of your choice then that's all well and
     good. However, in order to keep `how_slow` simple I think it's best not to
-    marry it to any specific charting solution. Also, I don't think `how_slow`
-    should concern itself with anything other than collection your metrics and
-    making them available to you.
-* **If this uses a log file can I use this on [Heroku][6]?**
-  * Sure, but you will need to periodically copy your log file to someplace more
-    permanent due to Heroku's [read-only (a.k.a. ephemeral) file system][7]
-    or else it may get deleted at [Heroku's][6] whim.
-  * Writing your log file to S3 is probably not a good idea here, since that
-    involves some network overhead, and will almost certainly add significant
-    logging overhead.
+    marry it to any specific charting solution.
+  * Also, I don't think `how_slow` should concern itself with anything other
+    than collecting your metrics and making them available to you.
+* **If this uses a log file, then can I use this on [Heroku][6]?**
+  * Currently, no, because of the [read-only ephemeral file system][7] on
+    Heroku.
+  * Soon, when the `:active_record` [storage option is added][10], it **will**
+    work on [Heroku][6] and store your metrics in your database along with all
+    your other data.
 
 ## Thanks!
 
