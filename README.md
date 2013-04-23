@@ -40,9 +40,9 @@ single controller action in your Rails app. It stores this information in:
 
     "#{Rails.root}/log/metrics.log"
 
-You can [configure](#config) the name of the file if you wish.
+You can [configure](#configuration) the name of the file if you wish.
 
-You can [configure](#config) the list of controller actions for which you collect
+You can [configure](#configuration) the list of controller actions for which you collect
 performance metrics.
 
 ### Usage stats
@@ -115,7 +115,7 @@ would call:
 Both of the reporting methods accept the standard ActiveSupport core extentions
 for calculating times in the past, such as `7.days.ago` or `5.minutes.ago`, etc.
 
-## <a id="config"></a>Configuration
+## Configuration
 
 Currently `how_slow` supports three configuration options.
 
