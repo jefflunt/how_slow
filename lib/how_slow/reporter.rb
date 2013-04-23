@@ -52,12 +52,12 @@ module HowSlow
     # further limited to a maximum number of results as specified by by the 
     # `number_of_actions` argument.
     #
-    # So, if you have the following set of metrics in the log file...
+    # So, if you have the following set of metrics...
     #
     #   {'type':'action', 'total_runtime':123.0, ... }
     #   {'type':'action', 'total_runtime':456.7, ... }
     #   {'type':'action', 'total_runtime':99.0,  ... }
-    #   {'type':'counter', ... }
+    #   {'type':'counter', 'count': 1, ... }
     #   {'type':'action', 'total_runtime':3.0,   ... }
     # 
     # ...then
@@ -85,8 +85,39 @@ module HowSlow
       sorted_metrics.last(number_of_actions).reverse
     end
 
+    # Gives you the sum of the `count` attributes of all Counter metrics with
+    # the specified between now and `keep_since`.
+    #
+    # So, if you have the following set of metrics...
+    #
+    #   {'type':'action', 'total_runtime':99.0,  ... }
+    #   {'type':'counter', 'event_name': 'user login', 'count': 1, ... }
+    #   {'type':'counter', 'event_name': 'user login', 'count': 1, ... }
+    #   {'type':'counter', 'event_name': 'user login', 'count': 1, ... }
+    #   {'type':'counter', 'event_name': 'user login', 'count': 1, ... }
+    #   {'type':'counter', 'event_name': 'user login', 'count': 1, ... }
+    #   {'type':'action', 'total_runtime':3.0,   ... }
+    #
+    # ...then
+    #
+    #   sum_counters_by('user login', nil)
+    #   => 5
+    #   sum_counters_by('an unknown event, nil)
+    #   => 0
+    #
+    # So, this method looks for all counter metrics named 'user login', finds 5
+    # of them, and sums their 'count' attribte. Since all of their 'count'
+    # attributes are 1, then the sum is 5.
+    #
+    # Similarly, if you pass in the name of a counter event that does't exist
+    # you will get 0.
+    #
+    # The default `keep_since` is 7.days.ago. If you you'd prefer to get the sum
+    # for a named counter for as far back as your metrics go, then pass `nil`
+    # for this value.
     def sum_counters_by(event_name, keep_since=7.days.ago)
       filtered_metrics = keep_since.nil? ? @metrics[:counter] : @metrics[:counter].reject{|metric| Time.parse(metric.datetime) < keep_since}
+      filtered_metrics = filtered_metrics.select{|metric| metric.event_name == event_name}
       filtered_metrics.size == 0 ? 0 : filtered_metrics.collect{|metric| metric.count}.reduce(:+)
     end
   end
