@@ -81,8 +81,8 @@ module HowSlow
     # 
     def slowest_actions_by(measurement, number_of_actions=5, keep_since=7.days.ago)
       sorted_metrics = keep_since.nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric.datetime) < keep_since}
-      sorted_metrics = sorted_metrics.sort_by{|action| action.send(measurement)}
-      sorted_metrics.last(number_of_actions).reverse
+      sorted_metrics = sorted_metrics.sort_by{|action| action.try(measurement)}
+      number_of_actions.nil? ? sorted_metrics.reverse : sorted_metrics.last(number_of_actions).reverse
     end
 
     # Gives you the sum of the `count` attributes of all Counter metrics with
@@ -116,6 +116,7 @@ module HowSlow
     # for a named counter for as far back as your metrics go, then pass `nil`
     # for this value.
     def sum_counters_by(event_name, keep_since=7.days.ago)
+      return 0 if event_name.nil?
       filtered_metrics = keep_since.nil? ? @metrics[:counter] : @metrics[:counter].reject{|metric| Time.parse(metric.datetime) < keep_since}
       filtered_metrics = filtered_metrics.select{|metric| metric.event_name == event_name}
       filtered_metrics.size == 0 ? 0 : filtered_metrics.collect{|metric| metric.count}.reduce(:+)

@@ -1,11 +1,25 @@
 # Logfile created on 2013-04-14 02:29:09 UTC by logger.rb/25413
-{"datetime":"2013-01-08 12:00:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":900.0,"db_runtime":400.0,"view_runtime":450.0,"other_runtime":50.0,"params":{}}
-{"datetime":"2013-01-08 12:01:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":800.0,"db_runtime":400.0,"view_runtime":350.0,"other_runtime":50.0,"params":{}}
-{"datetime":"2013-01-08 12:02:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":700.0,"db_runtime":400.0,"view_runtime":250.0,"other_runtime":50.0,"params":{}}
-{"datetime":"2013-01-08 12:03:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":600.0,"db_runtime":400.0,"view_runtime":150.0,"other_runtime":50.0,"params":{}}
-{"datetime":"2013-01-08 12:04:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":500.0,"db_runtime":300.0,"view_runtime":150.0,"other_runtime":50.0,"params":{}}
-{"datetime":"2013-01-08 12:05:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":400.0,"db_runtime":200.0,"view_runtime":150.0,"other_runtime":50.0,"params":{}}
-{"datetime":"2013-01-08 12:06:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":300.0,"db_runtime":100.0,"view_runtime":150.0,"other_runtime":50.0,"params":{}}
-{"datetime":"2013-01-08 12:07:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":290.0,"db_runtime":100.0,"view_runtime":150.0,"other_runtime":40.0,"params":{}}
-{"datetime":"2013-01-08 12:08:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":280.0,"db_runtime":100.0,"view_runtime":150.0,"other_runtime":30.0,"params":{}}
-{"datetime":"2013-01-08 12:09:00 UTC","type":"action","event_name":"all_requests","status":200,"total_runtime":270.0,"db_runtime":100.0,"view_runtime":150.0,"other_runtime":20.0,"params":{}}
+# These metrics are purposely entered out-of-order (by datetime) to make sure
+# that the reporting methods, when tested, returns things in the expected order,
+# which will differ from the order in which they are entered here in the file
+#
+{"datetime":"2013-01-08 12:04:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":500.0,"db_runtime":300.0,"view_runtime":150.0,"other_runtime":50.0,"params":{}}
+{"datetime":"2013-01-08 12:08:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":280.0,"db_runtime":100.0,"view_runtime":150.0,"other_runtime":30.0,"params":{}}
+{"datetime":"2013-01-08 12:01:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":800.0,"db_runtime":400.0,"view_runtime":350.0,"other_runtime":50.0,"params":{}}
+{"datetime":"2013-01-08 12:03:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":600.0,"db_runtime":400.0,"view_runtime":150.0,"other_runtime":50.0,"params":{}}
+{"datetime":"2013-01-08 12:02:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":700.0,"db_runtime":400.0,"view_runtime":250.0,"other_runtime":50.0,"params":{}}
+{"datetime":"2013-01-08 12:05:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":400.0,"db_runtime":200.0,"view_runtime":150.0,"other_runtime":50.0,"params":{}}
+{"datetime":"2013-01-08 12:09:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":270.0,"db_runtime":100.0,"view_runtime":150.0,"other_runtime":20.0,"params":{}}
+{"datetime":"2013-01-08 12:06:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":300.0,"db_runtime":100.0,"view_runtime":150.0,"other_runtime":50.0,"params":{}}
+{"datetime":"2013-01-08 12:00:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":900.0,"db_runtime":400.0,"view_runtime":450.0,"other_runtime":50.0,"params":{}}
+{"datetime":"2013-01-08 12:07:00 UTC","type_name":"action","event_name":"all_requests","status":200,"total_runtime":290.0,"db_runtime":100.0,"view_runtime":150.0,"other_runtime":40.0,"params":{}}
+# Start of test counter metrics
+# The sum of the counts should be 35
+#
+{"datetime":"2013-01-08 12:00:00 UTC","type_name":"counter","event_name":"some count","count":1}
+{"datetime":"2013-01-08 12:01:00 UTC","type_name":"counter","event_name":"some count","count":3}
+{"datetime":"2013-01-08 12:02:00 UTC","type_name":"counter","event_name":"some count","count":2}
+{"datetime":"2013-01-08 12:03:00 UTC","type_name":"counter","event_name":"some count","count":9}
+{"datetime":"2013-01-08 12:04:00 UTC","type_name":"counter","event_name":"some count","count":8}
+{"datetime":"2013-01-08 12:05:00 UTC","type_name":"counter","event_name":"some count","count":4}
+{"datetime":"2013-01-08 12:06:00 UTC","type_name":"counter","event_name":"some count","count":8}

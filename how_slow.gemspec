@@ -18,7 +18,10 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'activesupport','>3.0'
   gem.add_dependency 'rails','>3.0'
 
+  gem.add_development_dependency 'rake','~>10.0.4'
+  gem.add_development_dependency 'pry','~>0.9.12'
   gem.add_development_dependency 'minitest','~>4.7.1'
+  gem.add_development_dependency 'minitest-spec-context','~>0.0.3'
   gem.add_development_dependency 'turn','~>0.9.6'
   gem.add_development_dependency 'mocha','~>0.13'
 end
