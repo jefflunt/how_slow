@@ -1,7 +1,7 @@
 require 'test/test_helper'
 
 class ReporterTest < MiniTest::Unit::TestCase
-  describe HowSlow do
+  describe HowSlow::Reporter do
     def setup
       Time.stubs(:now).returns(Time.parse('2013-01-08 12:10:00 UTC'))
       HowSlow.stubs(:full_path_to_log_file).returns('test/log/test_metrics.log')

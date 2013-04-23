@@ -31,20 +31,20 @@ module HowSlow
       # The name of the controller action triggered
       #
       def action
-        @params['action']
+        @params['action'] || @params[:action]
       end
 
       # The name of the controller triggered
       #
       def controller
-        @params['controller']
+        @params['controller'] || @params[:controller]
       end
 
       # This 
       def as_json
         hash = super
-        hash[:controller] = controller
-        hash[:action] = action
+        hash['controller'] = controller
+        hash['action'] = action
 
         hash
       end

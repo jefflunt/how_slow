@@ -1,25 +1,27 @@
 require 'test/test_helper'
 
 class BaseTest < MiniTest::Unit::TestCase
-  describe HowSlow::Metrics::Base do
+  describe HowSlow::Metrics::Counter do
     it 'converts to JSON as expected' do
       params_hash = {
         :datetime => '2010-01-08 12:00:00 UTC',
         :event_name => 'metric test',
-        :meta => {:this_is => "only a test"}
+        :meta => {:this_is => "only a test"},
+        :count => 42
       }
 
       expected_json = {
         'datetime' => '2010-01-08 12:00:00 UTC',
         'event_name' => 'metric test',
         'meta' => {:this_is => "only a test"},
-        'type_name' => 'metric'
-      }
+        'type_name' => 'counter',
+        'count' => 42
+     }
 
 
-      base_metric = HowSlow::Metrics::Base.new(params_hash)
+      counter_metric =  HowSlow::Metrics::Counter.new(params_hash)
 
-      assert_equal expected_json, base_metric.as_json
+      assert_equal expected_json, counter_metric.as_json
     end
   end
 end
