@@ -86,9 +86,9 @@ If instead you wanted a daily email with the slowest 10 actions, you would call:
 ...and if you wanted to know the most DB or view intensive actions you would
 call:
 
-    reporter.slowest_actions_by(:total_db_runtime, 10, 1.day.ago)
+    reporter.slowest_actions_by(:db_runtime, 10, 1.day.ago)
     # OR
-    reporter.alowest_actions_by(:total_view_runtime, 10, 1.day.ago)
+    reporter.alowest_actions_by(:view_runtime, 10, 1.day.ago)
 
 ### Usage stats
 
