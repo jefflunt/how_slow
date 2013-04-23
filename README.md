@@ -146,7 +146,7 @@ If you want to run the tests for this gem do the following:
 
 ## FAQ
 
-* Is this appropriate for prodcution use? Will there be much overhead?
+* **Is this appropriate for prodcution use? Will there be much overhead?**
   * **Yes**, it's appropriate for production use. Performance metrics are only
     really useful IMHO if they are measuring your actual production system.
   * It's hard to say exactly how much overhead it will add, but it's very
@@ -159,14 +159,14 @@ If you want to run the tests for this gem do the following:
     so long as you have enough free memory on your server to do so. The memory
     issue can be addressed in two ways: rotate your logs regularly and only
     store recent data, or wait until [ActiveRecord storage][10] is added so you
-    can write your metrics reports for an added layer of control.
-* Why not write the logs to a database or [redis][8] or something more that a
-  flat file?
+    can write your own, arbitrarily complex metrics reports.
+* **Why not write the logs to a database or [redis][8] or something more that a
+  flat file?**
   * First of all, performance and simplicity are top priorities.
   * Second of all, [ActiveRecord support][10] is planned, so don't worry - it's
     coming.
-* Is there any way I can easily feed the JSON data into a charting/visualization
-  tool?
+* **Is there any way I can easily feed the JSON data into a charting/visualization
+  tool?**
   * Collection and visualization are really two separate problems. If you want
     to massage the data that comes out of `how_slow` so that it will fit into
     the time series charting library of your choice then that's all well and
@@ -174,7 +174,7 @@ If you want to run the tests for this gem do the following:
     marry it to any specific charting solution. Also, I don't think `how_slow`
     should concern itself with anything other than collection your metrics and
     making them available to you.
-* If this uses a log file can I use this on [Heroku][6]?
+* **If this uses a log file can I use this on [Heroku][6]?**
   * Sure, but you will need to periodically copy your log file to someplace more
     permanent due to Heroku's [read-only (a.k.a. ephemeral) file system][7]
     or else it may get deleted at [Heroku's][6] whim.
