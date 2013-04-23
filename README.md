@@ -147,7 +147,7 @@ If you want to run the tests for this gem do the following:
 ## FAQ
 
 * Is this appropriate for prodcution use? Will there be much overhead?
-  * Yes, it's appropriate for production use. Performance metrics are only
+  * **Yes**, it's appropriate for production use. Performance metrics are only
     really useful IMHO if they are measuring your actual production system.
   * It's hard to say exactly how much overhead it will add, but it's very
     minimal. We're just writing to a log file - it's not that complex. We're
