@@ -11,7 +11,7 @@ controller actions.
 "Why not use [statsd][2] or [NewRelic][4]?" you might ask.
 
 * I work in an environment where the risk of sensitive data accidentally being
-  sent to a 3rd party service is unacceptable. So, can't use [NewRelic][4].
+  sent to a 3rd party service is unacceptable. So, I can't use [NewRelic][4].
 * I want a solution that doesn't rely on a 3rd party at all, simplifying my
   application dependencies.
 * Most of the Rails apps I work on are maintained by 1-2 programmer teams, and
@@ -97,7 +97,7 @@ If you wanted to know the number of user logins this week you would call:
     reporter.sum_counters_by('user_login')
     => 235
 
-If you wanted to know how many cookies you at this week you would call:
+If you wanted to know how many cookies you ate this week you would call:
 
     reporter.sum_counters_by('cookies_eaten')
     => 17
