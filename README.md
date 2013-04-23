@@ -40,9 +40,9 @@ single controller action in your Rails app. It stores this information in:
 
     "#{Rails.root}/log/metrics.log"
 
-You can [configure][#config] the name of the file if you want to.
+You can [configure](#config) the name of the file if you wish.
 
-You can [configure][#config] the list of controller actions for which you collect
+You can [configure](#config) the list of controller actions for which you collect
 performance metrics.
 
 ### Usage stats
@@ -129,7 +129,7 @@ Currently `how_slow` supports three configuration options.
   `"#{Rails.root}/log/metrics.log"`
 * `:storage` - the storage method. Right now the default (and only option) is
   `:log_file`, however support for collecting metrics into your database via an
-  `:active_record` [is planned][10]. This will mean that writing much more
+  `:active_record` option [is planned][10]. That means being able to write more
   complex metrics reports via SQL and the [ActiveRecord Query Interface][11]
   will be possible in the future. If you're a power user, want to collect a
   ton of metrics, or want to do more advanced reporting such as grouping metrics
