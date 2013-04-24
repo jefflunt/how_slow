@@ -23,7 +23,9 @@ controller actions.
   a generic graphing/charting software stack, just to get some basic usage and
   performance numbers from my apps.
 * I also don't enjoy needing to go to SQL or the Rails console to get this
-  information. `how_slow` is a **great** middle ground.
+  information. There's nothing wrong with going straight to SQL, of course, it's
+  just that so much of what I do there was boilerplate reporting, so why not
+  make it simpler to access?
 
 ## Installing
 
