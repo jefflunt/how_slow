@@ -7,3 +7,5 @@ require 'how_slow/metrics/base'
 require 'how_slow/metrics/action'
 require 'how_slow/metrics/counter'
 
+require 'tasks/how_slow_tasks.rake'
+
