@@ -85,6 +85,23 @@ module HowSlow
       number_of_actions.nil? ? sorted_metrics.reverse : sorted_metrics.last(number_of_actions).reverse
     end
 
+    # Returns an array of all counter event names present in the current set of
+    # metrics. For example, if you have recorded named counter events for:
+
+    # 'login'
+    # 'new signup'
+    # 'new post'
+    #
+    # ...then...
+    #
+    #  > reporter.all_counter_event_names
+    # => ['login', 'new signup', 'new post']
+    # The order of the event names is NOT guaranteed to be any particular order,
+    # so you must sort them yourself if that is important to you.
+    def all_counter_event_names
+      @metrics[:counter].map(&:event_name).uniq
+    end
+
     # Gives you the sum of the `count` attributes of all Counter metrics with
     # the specified between now and `keep_since`.
     #
