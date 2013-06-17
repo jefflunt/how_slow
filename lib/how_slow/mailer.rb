@@ -55,6 +55,6 @@ class HowSlow::Mailer < ActionMailer::Base
       end
     end
 
-    mail(:
+    mail(:to => options[:to], :from => options[:from], :subject => options[:subject])
   end
 end

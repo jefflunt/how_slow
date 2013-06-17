@@ -5,17 +5,16 @@ module HowSlow
     :logger_filename => "metrics.log",
     :storage => :log_file,
     :email_options => {
-      :subject => "#{Rails.env.titleize} #{Rails.application.class.to_s.split("::").first} metrics",
-      :from => 'metrics notifier',
+      :subject => "metrics email",
       :actions => {
-        :sort_by => :total_runtime
+        :sort_by => :total_runtime,
         :show_measurements => [:total_runtime, :db_runtime, :view_runtime],
         :number_of_actions => 5,
         :retention => 7.days
       },
       :counters => {
         :event_names => nil,  # all event names
-        :retention => 7.days
+        :retention => 7.days,
         :sort_by => :alpha_asc
       }
     }
