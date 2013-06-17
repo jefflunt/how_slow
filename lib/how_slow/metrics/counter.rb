@@ -15,6 +15,13 @@ module HowSlow
         super
         @type_name = 'counter'
       end
+
+      # Provides a string representation of this Counter metric, in the format of:
+      # [event_name] :: [count]A
+      # e.g. new login :: 73
+      def to_default_email_string
+        "#{am.event_name} :: #{am.count}"
+      end
     end
   end
 end

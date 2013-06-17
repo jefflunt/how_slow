@@ -1,12 +1,12 @@
 Slowest <%= @number_of_actions %> action(s), sorted by <%= @action_sort_by.to_s.gsub(/_/, " ").downcase %>:
 --------------------
 <% @action_metrics.each do |am| %>
-  <%= "#{am.datetime} :: #{am.params['controller']}/#{am.params['action']}\t#{am.total_runtime.to_i} / #{am.db_runtime.to_i} / #{am.view_runtime.to_i}"}
+  <%= am.to_default_email_string %>
 <% end %>
 
 
 Counters sorted by <%= @counter_sort_by.to_s.gsub(/_/, " ").downcase %>:
 --------------------
 <% @counter_metrics.each do |cm| %>
-  <%= "#{am.event_name} :: #{am.count}" %>
+  <%= cm.to_default_email_string %>
 <% end %>

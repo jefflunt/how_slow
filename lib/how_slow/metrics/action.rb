@@ -40,6 +40,13 @@ module HowSlow
         @params['controller'] || @params[:controller]
       end
 
+      # Provides a string representation of this Action metric, in the format of:
+      # [timestampe] :: [controller]/[action] [total_runtime] / [db_runtime] / [view_runtime]
+      # e.g. 2013-05-02T18:24:51+00:00 :: /login/new    1409 / 272 / 1099
+      def to_default_email_string
+        "#{am.datetime} :: #{am.params['controller']}/#{am.params['action']}\t#{am.total_runtime.to_i} / #{am.db_runtime.to_i} / #{am.view_runtime.to_i}"}
+      end
+
       # This 
       def as_json
         hash = super
