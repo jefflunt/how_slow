@@ -5,11 +5,13 @@ module HowSlow
     :logger_filename => "metrics.log",
     :storage => :log_file,
     :email_options => {
+      :to => nil,
+      :from => nil,
       :subject => "metrics email",
       :actions => {
         :sort_by => :total_runtime,
         :show_measurements => [:total_runtime, :db_runtime, :view_runtime],
-        :number_of_actions => 5,
+        :number_of_actions => 50,
         :retention => 7.days
       },
       :counters => {

@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files`.split("\n")
   gem.test_files    = `git ls-files -- {test}/*`.split("\n")
   gem.name          = 'how_slow'
-  gem.require_paths = ["lib"]
+  gem.require_paths = ['lib']
   gem.version       = HowSlow::VERSION
   
   gem.add_dependency 'activesupport','>3.0'

@@ -1,22 +1,21 @@
 require 'action_mailer'
 
 class HowSlow::Mailer < ActionMailer::Base
-  # This method expects an `options` hash in the following format:
+  # This method expects an `options` hash in the following format (the default
+  # values are shown as examples):
   #
   # {
-  #   :subject => "My title"                                  # optional - defaults to
-  #                                                           # "<Rails.env.titleize> <app name> metrics"
+  #   :subject => "#{Rails.env.downcase} #{Rails.app.class.to_s} metrics"
   #   :actions => {
-  #     :sort_by => :total_runtime,                           # which metric to use to sort the resulting list
-  #                                                           # the default is :total_runtime
-  #     :show_measurements => [:db_runtime, :view_runtime],   # one or more measurements to include
-  #                                                           # the default includes all measurements
-  #     :number_of_actions => 100,                            # number of action metrics to include
-  #     :keep_since => 7.days.ago                             # how far back in time to include metrics
+  #     :sort_by => :total_runtime,
+  #     :show_measurements => [:total_runtime, :db_runtime, :view_runtime]
+  #     :number_of_actions => 50,
+  #     :keep_since => 7.days.ago
   #   },
   #   :counters => {
-  #     :event_names => ['login', 'new signup'],  # the names of the counter events you want to include
-  #     :keep_since => 7.days.ago                 # how far back in time to include metrics
+  #     :event_names => nil,                      # the names of counter metrics to include, or `nil` to
+  #                                               # include all of them
+  #     :keep_since => 7.days.ago
   #     :sort => :alpha_asc                       # one of (:alpha_asc, :alpha_desc, :numeric_asc, :numeric_desc)
   #   }
   # }
@@ -36,12 +35,12 @@ class HowSlow::Mailer < ActionMailer::Base
       @number_of_actions = options[:actions][:number_of_actions]
       @action_keep_since = options[:actions][:retention].ago
       
-      @action_metrics = slowest_actions_by(@action_sort_by, @number_of_actions, @action_keep_since)
+      @action_metrics = reporter.slowest_actions_by(@action_sort_by, @number_of_actions, @action_keep_since)
     end
   
     @counter_metrics = []
     if options[:counters]
-      event_names = options[:counters][:event_names]
+      event_names = options[:counters][:event_names] || reporter.all_counter_event_names
       @counter_keep_since = options[:counters][:retention].ago
 
       @counter_sort_by = options[:counters]
