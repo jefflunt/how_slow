@@ -81,7 +81,10 @@ class ReporterTest < MiniTest::Unit::TestCase
       end
 
       it 'passing :total_runtime will give you a list of 5 metrics within the last 7 days be default, sorted by :total_runtime' do
-        @reporter.slowest_actions_by(:total_runtime).each_with_index do |m, i|
+        slowest_metrics = @reporter.slowest_actions_by(:total_runtime)
+        assert_equal 5, slowest_metrics.size
+        
+        slowest_metrics.each_with_index do |m, i|
           assert_equal slowest_actions_by_each_timing_metric[i].as_json, m.as_json
         end
       end

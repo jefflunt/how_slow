@@ -47,7 +47,7 @@ module HowSlow
         "#{datetime} :: #{params['controller']}/#{params['action']}\t#{total_runtime.to_i} / #{db_runtime.to_i} / #{view_runtime.to_i}"
       end
 
-      # This 
+      # A JSON version of this action metric
       def as_json
         hash = super
         hash['controller'] = controller

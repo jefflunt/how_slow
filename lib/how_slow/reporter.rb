@@ -82,6 +82,7 @@ module HowSlow
     def slowest_actions_by(measurement, number_of_actions=5, keep_since=7.days.ago)
       sorted_metrics = keep_since.nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric.datetime) < keep_since}
       sorted_metrics = sorted_metrics.sort_by{|action| -action.try(measurement)}
+      sorted_metrics = (number_of_actions.nil? ? sorted_metrics : sorted_metrics[0..number_of_actions-1])
     end
 
     # Returns an array of all counter event names present in the current set of

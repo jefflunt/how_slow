@@ -1,9 +1,11 @@
+require 'action_mailer'
+
 class HowSlow::Mailer < ActionMailer::Base
   # This method expects an `options` hash in the following format (the default
   # values are shown as examples):
   #
   # {
-  #   :subject => "#{Rails.env.downcase} #{Rails.app.class.to_s} metrics"
+  #   :subject => "metrics report",
   #   :actions => {
   #     :sort_by => :total_runtime,
   #     :show_measurements => [:total_runtime, :db_runtime, :view_runtime]

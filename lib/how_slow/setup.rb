@@ -7,7 +7,7 @@ module HowSlow
     :email_options => {
       :to => nil,
       :from => nil,
-      :subject => "[#{Rails.env}] #{Rails.application.class.parent_name} metrics",
+      :subject => "metrics report",
       :actions => {
         :sort_by => :total_runtime,
         :show_measurements => [:total_runtime, :db_runtime, :view_runtime],
