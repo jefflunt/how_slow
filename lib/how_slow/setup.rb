@@ -7,7 +7,7 @@ module HowSlow
     :email_options => {
       :to => nil,
       :from => nil,
-      :subject => "metrics email",
+      :subject => "[#{Rails.env}] #{Rails.application.class.parent_name} metrics",
       :actions => {
         :sort_by => :total_runtime,
         :show_measurements => [:total_runtime, :db_runtime, :view_runtime],
@@ -16,8 +16,8 @@ module HowSlow
       },
       :counters => {
         :event_names => nil,  # all event names
-        :retention => 7.days,
-        :sort_by => :alpha_asc
+        :sort_by => :alpha_asc,
+        :retention => 7.days
       }
     }
   }

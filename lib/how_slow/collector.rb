@@ -40,7 +40,7 @@ module HowSlow
   # The 'other_runtime' attribute is simply whatever time if leftover from
   # 'total_runtime' after you subtract 'view_runtime' and 'db_runtime'.
   #
-  class Collector < Rails::Railtie
+  class Collector < Rails::Engine
     @logger
 
     initializer "railtie.configure_rails_initialization" do |app|
