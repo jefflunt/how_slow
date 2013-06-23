@@ -23,6 +23,8 @@ class HowSlow::Mailer < ActionMailer::Base
   # See lib/how_slow/setup.rb for default values
   def metrics_email(options={})
     options = HowSlow::config[:email_options].merge(options)
+    @to = options[:to]
+    @from = options[:from]
     @subject = options[:subject]
     HashWithIndifferentAccess.new(options) unless options.class == HashWithIndifferentAccess
 
@@ -41,10 +43,10 @@ class HowSlow::Mailer < ActionMailer::Base
     @counter_metrics = []
     if options[:counters]
       event_names = options[:counters][:event_names] || reporter.all_counter_event_names
-      @counter_keep_since = options[:counters][:retention].ago
+      @counter_retention = options[:counters][:retention].ago
 
       @counter_sort_by = options[:counters][:sort_by]
-      event_names.each{|e| counter_metrics << reporter.sum_counters_by(e, @counter_keep_since) }
+      event_names.each{|e| @counter_metrics << reporter.sum_counters_by(e, @counter_retention) }
 
       case @counter_sort_by
         when :alpha_asc     then @counter_metrics.sort!{|a, b| a.event_name <=> b.event_name }
@@ -54,6 +56,6 @@ class HowSlow::Mailer < ActionMailer::Base
       end
     end
 
-    mail(:to => options[:to], :from => options[:from], :subject => options[:subject])
+    mail
   end
 end

@@ -93,7 +93,7 @@ module HowSlow
     private
     def self.record_metric(metric)
       case HowSlow.config[:storage]
-      when :log_file then @logger.info(metric.as_json.to_json)
+        when :log_file then @logger.info(metric.as_json.to_json)
       end
      end
   end # Collector class
