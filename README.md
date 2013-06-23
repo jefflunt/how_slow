@@ -3,6 +3,11 @@
 Easily collect Rails app performance metrics without relying on 3rd party
 services or setting up a separate logging server.
 
+### travis-ci build status:
+
+[![Build Status](https://travis-ci.org/normalocity/how_slow.png)](https://travis-ci.org/normalocity/how_slow)
+
+
 ## Why?
 
 This gem began as a way to easily collect performance metrics for Rails
