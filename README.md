@@ -113,7 +113,7 @@ Four configuration options are supported:
   `:log_file` option is provided as a very stripped down, simple choice if all
   you want for you app metrics is simplicity.
 * `:email_options` - the list of default options for metrics emails. Any options
-  you passed to the `HowSlow::Mailer::metrics_email` will override these
+  you passed to `HowSlow::Mailer::metrics_email` will override these
   defaults.
 
 [1]: http://en.wikipedia.org/wiki/Federal_Information_Security_Management_Act_of_2002
