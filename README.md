@@ -67,10 +67,12 @@ Specify an optional number parameter to count up or down by any whole number:
 
 ### Via email:
 
-    # rake task
+    # rake task - this will ONLY use the defaults specified in your
+    # `config/environment.rb` OR `config/environments/[Rails.env]` file
     rake how_slow:metrics_email
 
-    # in code
+    # in code - this allows you to override the defaults in your
+    # environment file
     HowSlow::Mailer.metrics_email(options)
 
 * See the `lib/how_slow/mailer.rb` class for which options are availble.
