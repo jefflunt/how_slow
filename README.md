@@ -1,5 +1,7 @@
 # how_slow
 
+*for v0.3.0*
+
 Collect Rails app performance and usage metrics without relying on 3rd party
 services or setting up a separate logging server.
 
