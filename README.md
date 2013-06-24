@@ -77,8 +77,9 @@ Specify an optional number parameter to count up or down by any whole number:
 * Configure default email options in your environemnt file. See
   `lib/how_slow/setup.rb` for a list of defaults.
 
-Inside a Rails app (see `lib/how_slow/reporter.rb` for more examples) and
-documentation on default options:
+### Inside a Rails app:
+
+See `lib/how_slow/reporter.rb` for more examples) and documentation on default options:
 
     reporter = HowSlow::Reporter.new
     reporter.slowest_actions_by(:total_runtime)
@@ -114,14 +115,6 @@ Four configuration options are supported:
 * `:email_options` - the list of default options for metrics emails. Any options
   you passed to the `HowSlow::Mailer::metrics_email` will override these
   defaults.
-
-## FAQ
-
-* **Why not write the logs to a database?
-  * First of all, performance and simplicity are top priorities, and writing to
-    the file system is fast.
-  * Second of all, [ActiveRecord support][10] is planned, but not currently
-    implemented.
 
 [1]: http://en.wikipedia.org/wiki/Federal_Information_Security_Management_Act_of_2002
 [2]: https://github.com/etsy/statsd/
