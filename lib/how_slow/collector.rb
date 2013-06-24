@@ -80,7 +80,7 @@ module HowSlow
     # `event_name` - the name of the event
     # `count` - the count at this time
     #
-    def self.count(event_name, count)
+    def self.count(event_name, count=1)
       metric = HowSlow::Metrics::Counter.new(
         :datetime => Time.now,
         :event_name => event_name,
