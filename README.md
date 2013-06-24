@@ -23,7 +23,7 @@ Want to run the tests yourself?
 * You want a solution that doesn't rely on a 3rd party at all, simplifying your
   application dependencies.
 * You don't need all the flashy charts and graphs of [NewRelic][4] and you're
-  note afraid to tweak some environment files to get just the metrics you want.
+  not afraid to tweak some environment files to get just the metrics you want.
 * The idea of setting up and maintaingin a [statsd][2] server along with a
   graphing/charting software stack to display it just sounds like a waste of
   time.
@@ -40,17 +40,17 @@ Want to run the tests yourself?
 ### Performance stats
 
 `how_slow` will automatically capture performance metrics for every
-single controller action in your Rails app by default in a file:
+single controller action in your Rails app by default in the file:
 
     %Rails.root%/log/metrics.log
 
-You can [change](#configuration) the name of this file if you wish.
+You can [change](#configuration) the name of this file.
 
-You can [change](#configuration) the list of controller actions that are captured.
+You can [change](#configuration) the list of controller actions captured.
 
 ### Usage stats
 
-Want to count logins in order to figure out how many monthly active users you have?
+Want to count logins?
 
 In your controller code:
 
@@ -77,11 +77,13 @@ Specify an optional number parameter to count up or down by any whole number:
     # environment file
     HowSlow::Mailer.metrics_email(options)
 
-* See the `lib/how_slow/mailer.rb` class for which options are availble.
+* See the `lib/how_slow/mailer.rb` class for which options are availble. It's
+  possible to specify the number of metrics reported, the sort order, and how
+  far back in time you want the report to cover.
 * Configure default email options in your environemnt file. See
   `lib/how_slow/setup.rb` for a list of defaults.
 
-### Inside a Rails app:
+### There's also a `Reporter` class to get metrics in-app:
 
 See `lib/how_slow/reporter.rb` for more examples) and documentation on default options:
 
@@ -90,10 +92,13 @@ See `lib/how_slow/reporter.rb` for more examples) and documentation on default o
     => [HowSlow::Metrics::Action<# >, ...]   # sorted by #total_runtime
     
     reporter.slowest_actions_by(:db_runtime, 50, 1.month.ago)
-    => [HowSlow::Metrics::Action<# >, ...]   # limited to metrics in the last month
+    => [HowSlow::Metrics::Action<# >, ...]   # limited to 50 metrics in the last month
     
-    reporter.sum_counters_by('user_login')
-    => 235
+    reporter.sum_counters_by('user_login')   # retrieve the value of any counter
+    => 526354
+
+    reporter.sum_counters_by('user_login', 1.month.ago) # restrict counts to just the last month
+    => 1254
 
 ## Configuration
 
@@ -104,7 +109,7 @@ Four configuration options are supported:
   [ActiveSupport::Notifications Subscribers][3]. `how_slow` will default to
   tracking **all** controller actions automatically if you don't explicitly set
   this option.
-* `:logger_filename` - the name of the file to write the metrics logs. The
+* `:logger_filename` - the name of the file used to write metrics data. The
   default is `metrics.log`, which winds up placing the file under
   `"#{Rails.root}/log/metrics.log"`
 * `:storage` - the storage method. Right now the default (and only option) is
@@ -117,7 +122,7 @@ Four configuration options are supported:
   `:log_file` option is provided as a very stripped down, simple choice if all
   you want for you app metrics is simplicity.
 * `:email_options` - the list of default options for metrics emails. Any options
-  you passed to `HowSlow::Mailer::metrics_email` will override these
+  you pass to `HowSlow::Mailer::metrics_email` will override these
   defaults.
 
 [1]: http://en.wikipedia.org/wiki/Federal_Information_Security_Management_Act_of_2002
