@@ -30,6 +30,7 @@ module HowSlow
 
   # The full path to the log file. If you just want the filename you can get
   # that from `HowSlow.config[:logger_filename]`
+  #
   def self.full_path_to_log_file
     "#{Rails.root}/log/#{HowSlow.config[:logger_filename]}"
   end
