@@ -18,6 +18,10 @@ module HowSlow
 
   @valid_config_keys = @config.keys
 
+  def self.configure(opts={})
+    opts.each {|k,v| @config[k.to_sym] = v if @valid_config_keys.include? k.to_sym}
+  end
+
   # Returns a hash of the gem's configuration options.
   #
   def self.config

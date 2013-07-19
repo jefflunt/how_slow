@@ -33,17 +33,17 @@ class HowSlow::Mailer < ActionMailer::Base
 
     @action_metrics = []
     @action_sort_by = options[:email_actions_sort]
-    number_of_actions = action_options[:number_of_actions]
-    @action_keep_since = action_options[:retention].ago
+    number_of_actions = options[:email_actions_max]
+    @action_keep_since = options[:email_actions_retention].ago
     
     @action_metrics = reporter.slowest_actions_by(@action_sort_by, number_of_actions, @action_keep_since)
   
     @counter_metrics = []
 
-    event_names = counter_options[:event_names] || reporter.all_counter_event_names
-    @counter_retention = counter_options[:retention].ago
+    event_names = options[:email_counters_events] || reporter.all_counter_event_names
+    @counter_retention = options[:email_counters_retention].ago
 
-    @counter_sort_by = counter_options[:sort_by]
+    @counter_sort_by = options[:email_counters_sort]
     event_names.each{|e| @counter_metrics << reporter.sum_counters_by(e, @counter_retention) }
 
     case @counter_sort_by
