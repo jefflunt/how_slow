@@ -1,6 +1,6 @@
-## v0.3.0
+### v0.3.0
 
-### Breaking changes (versus v0.2.x):
+#### Breaking changes (versus v0.2.x):
 
 * Refactored the `HowSlow::config` options - you will **definitely**
   [want to take a look at the new structure], 
@@ -12,7 +12,7 @@
   to make the mailer views easily available and override-able in the
   app that is using `HowSlow`
 
-### Other code changes
+#### Other code changes
 
 * Added [email report support!](https://github.com/normalocity/how_slow/issues/12)
 * Added `#to_default_email_string` methods to the various metric types as a convenience
@@ -26,15 +26,15 @@
 * Building against [eight different Ruby implementations via TravisCI](https://travis-ci.org/normalocity/how_slow)
   from 1.8-2.0, including MRI, JRuby, and Rubinius
 
-### Documentation changes
+#### Documentation changes
 
 * Updated README to reflect latest code changes and usage recommendations
 * Updated all the code-level documentation to reflect the latest 0.3.0 functionality
 * Slightly changed the gem description
 
-## v0.2.0
+### v0.2.0
 
-### Breaking changes (versus v0.1.x):
+#### Breaking changes (versus v0.1.x):
 
 * The logger changes the JSON attribute `type` to `type_name` so as not to
   collide with the deprecated `type` method in Ruby. This means that any metrics
@@ -54,7 +54,7 @@
   Check the structure if code that depends on these hashes seems to suddenly
   break.
 
-### Other changes
+#### Other changes
 
 * To supoprt the new `counter` metric type, I added the
   `HowSlow::Reporter#sum_counters_by` method, which allows you to get metrics
