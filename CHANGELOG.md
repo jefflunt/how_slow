@@ -1,3 +1,37 @@
+## v0.3.0
+
+### Breaking changes (versus v0.2.x):
+
+* Refactored the `HowSlow::config` options - you will **definitely**
+  [want to take a look at the new structure], 
+  as they are very likely to break your previous use of `HowSlow 0.2.0`
+* Possible breakage of Rails 4 support. More specifically I changed the
+  `how_slow.gemspec` file to **exclude** Rails 4 support (for now)
+* No longer support Rails 3.0 (bumped minimum version to Rails 3.1)
+* Changed `HowSlow` from a `Rails::Railtie` to a `Rails::Engine` in order
+  to make the mailer views easily available and override-able in the
+  app that is using `HowSlow`
+
+### Other code changes
+
+* Added [email report support!](https://github.com/normalocity/how_slow/issues/12)
+* Added `#to_default_email_string` methods to the various metric types as a convenience
+  method for getting their values in a human-readable format in email
+* Added a rake task - `how_slow:metrics_email` for sending an email with a metrics
+  report. Suitable for consumption by `cron` or something similar that is outside
+  of your application.
+* The `actionmailer` gem is now required, but this shouldn't be a big deal, because
+  if you're already using Rails then you already have this installed
+* Changed the way that files are "required" in order to support Ruby 1.8 load paths
+* Building against [eight different Ruby implementations via TravisCI](https://travis-ci.org/normalocity/how_slow)
+  from 1.8-2.0, including MRI, JRuby, and Rubinius
+
+### Documentation changes
+
+* Updated README to reflect latest code changes and usage recommendations
+* Updated all the code-level documentation to reflect the latest 0.3.0 functionality
+* Slightly changed the gem description
+
 ## v0.2.0
 
 ### Breaking changes (versus v0.1.x):
