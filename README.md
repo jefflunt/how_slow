@@ -19,14 +19,15 @@ Want to run the tests yourself?
 ## Reasons to use `how_slow`
 
 * You're in an environment where the risk of sensitive data accidentally being
-  sent to a 3rd party service is unacceptable. So, you can't use [NewRelic][4].
+  leaked to a 3rd party service is unacceptable. So, you can't use [NewRelic][4].
 * You want a solution that doesn't rely on a 3rd party at all, simplifying your
   application dependencies.
-* You don't need all the flashy charts and graphs of [NewRelic][4] and you're
-  not afraid to tweak some environment files to get just the metrics you want.
-* The idea of setting up and maintaingin a [statsd][2] server along with a
-  graphing/charting software stack to display it just sounds like a waste of
-  time.
+* You don't need all the fancy charts and graphs of [NewRelic][4] and you're
+  not afraid of editing some simple config files to get *just* the metrics you
+  want.
+* The idea of setting up and maintaingin a [statsd][2] server, along with a
+  graphing/charting software stack, just to display your statistics sounds like
+  a waste of time.
 * 99% of your needs could be fulfilled by a simple, weekly email that lists your
   slowest controller actions and your most used features.
 
@@ -39,14 +40,14 @@ Want to run the tests yourself?
 
 ### Performance stats
 
-`how_slow` will automatically capture performance metrics for every
-single controller action in your Rails app by default in the file:
+`how_slow` will capture performance metrics for every single controller action
+in your Rails app by default, and place them in the file:
 
     %Rails.root%/log/metrics.log
 
-You can [change](#configuration) the name of this file.
-
 You can [change](#configuration) the list of controller actions captured.
+
+You can [change](#configuration) the name of this file.
 
 ### Usage stats
 
@@ -60,10 +61,14 @@ In your controller code:
 Specify an optional number parameter to count up or down by any whole number:
 
     # e.g. customer ordered three items:
-    HowSlow::Collector::count('items_ordered', 3)
+    HowSlow::Collector::count('total_items_ordered', 3)
 
     # e.g. customer returned two items:
-    HowSlow::Collector::count('items_ordered', -2)
+    HowSlow::Collector::count('total_items_ordered', -2)
+    
+    # e.g. count them separately
+    HowSlow::Collector::count('total_items_ordered', 3)
+    HowSlow::Collector::count('total_items_returned', 2)
 
 ## Retrieval
 
@@ -85,14 +90,14 @@ Specify an optional number parameter to count up or down by any whole number:
 
 ### There's also a `Reporter` class to get metrics in-app:
 
-See `lib/how_slow/reporter.rb` for more examples) and documentation on default options:
+See `lib/how_slow/reporter.rb` for more examples and documentation on default options:
 
     reporter = HowSlow::Reporter.new
     reporter.slowest_actions_by(:total_runtime)
-    => [HowSlow::Metrics::Action<# >, ...]   # sorted by #total_runtime
+    => [HowSlow::Metrics::Action<# >, ...]   # sorted by #total_runtime, DESC
     
     reporter.slowest_actions_by(:db_runtime, 50, 1.month.ago)
-    => [HowSlow::Metrics::Action<# >, ...]   # limited to 50 metrics in the last month
+    => [HowSlow::Metrics::Action<# >, ...]   # the 50 longest DB actions in the last month
     
     reporter.sum_counters_by('user_login')   # retrieve the value of any counter
     => 526354
@@ -102,7 +107,7 @@ See `lib/how_slow/reporter.rb` for more examples) and documentation on default o
 
 ## Configuration
 
-Four configuration options are supported:
+**Basic options:**
 
 * `:event_subscriptions` - an array of regex patters used to match actions. For
   more on how that works, see the documentation on
@@ -114,16 +119,29 @@ Four configuration options are supported:
   `"#{Rails.root}/log/metrics.log"`
 * `:storage` - the storage method. Right now the default (and only option) is
   `:log_file`, however support for collecting metrics into your database via an
-  `:active_record` option [is planned][10]. That means being able to write more
-  complex metrics reports via SQL and the [ActiveRecord Query Interface][11]
+  `:active_record` option [has been requested][10]. That means being able to
+  write more complex metrics reports via SQL and the [ActiveRecord Query Interface][11]
   will be possible in the future. If you're a power user, want to collect a
   ton of metrics, or want to do more advanced reporting such as grouping metrics
   by day of the week, etc., then you'll want to go this direction. The
   `:log_file` option is provided as a very stripped down, simple choice if all
   you want for you app metrics is simplicity.
-* `:email_options` - the list of default options for metrics emails. Any options
-  you pass to `HowSlow::Mailer::metrics_email` will override these
-  defaults.
+
+**Metrics email options:**
+
+* `:email_sender_address` - the email address that will appear in the `from` field
+* `:email_recipients` - the list of email address in the `to` field
+* `:email_subject` - the `subject` of the metrics report email
+* `:email_actions_sort` - the attribute by which to sort the action metrics in the report -
+  one of `[:total_runtime, :db_runtime, :view_runtime]`
+* `:email_actions_retention` - how far back in time to consider action metrics for
+  the email report, such as `7.days` or `1.month`
+* `:email_counters_events` - a list of the events to include in the report - the
+  default is `nil`, which means "give me all the counter values"
+* `:email_counters_sort` - how to sort the counters - one of
+  `[:alpha_asc, :alpha_desc, :numeric_asc, :numeric_desc]`
+* `:email_counters_retention` - how far back in time to consider counter metrics for
+  the email report, such as `7.days` or `1.month`
 
 [1]: http://en.wikipedia.org/wiki/Federal_Information_Security_Management_Act_of_2002
 [2]: https://github.com/etsy/statsd/
