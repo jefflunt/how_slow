@@ -24,9 +24,9 @@ class HowSlow::Mailer < ActionMailer::Base
   def metrics_email(options={})
     options = HowSlow::config.merge(options)
 
-    @from = options[:email_sender_address]
-    @to = options[:email_recipients]
-    @subject = options[:email_subject]
+    sender = options[:email_sender_address]
+    recipients = options[:email_recipients]
+    subject = options[:email_subject]
     HashWithIndifferentAccess.new(options) unless options.class == HashWithIndifferentAccess
 
     reporter = HowSlow::Reporter.new
@@ -53,6 +53,6 @@ class HowSlow::Mailer < ActionMailer::Base
       when :numeric_desc  then @counter_metrics.sort!{|a, b| b.count <=> a.count }
     end
 
-    mail
+    mail(:from => sender, :to => recipients, :subject => subject)
   end
 end
