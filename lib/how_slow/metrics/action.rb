@@ -1,6 +1,6 @@
 module HowSlow
   module Metrics
-    # A metric to track the performance of controller actions.
+    # A metric type to track the performance of controller actions.
     #
     class Action < HowSlow::Metrics::Base
       attr_accessor :status,
@@ -43,11 +43,13 @@ module HowSlow
       # Provides a string representation of this Action metric, in the format of:
       # [timestampe] :: [controller]/[action] [total_runtime] / [db_runtime] / [view_runtime]
       # e.g. 2013-05-02T18:24:51+00:00 :: /login/new    1409 / 272 / 1099
+      #
       def to_default_email_string
         "#{datetime} :: #{params['controller']}/#{params['action']}\t#{total_runtime.to_i} / #{db_runtime.to_i} / #{view_runtime.to_i}"
       end
 
       # A JSON version of this action metric
+      #
       def as_json
         hash = super
         hash['controller'] = controller
