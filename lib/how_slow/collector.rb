@@ -1,8 +1,8 @@
 require 'rails'
 
 module HowSlow
-  # Defines a Railtie that loads the metrics collector into your Rails app upon
-  # app initialization.
+  # Defines a Rails::Engine that loads the metrics collector into your Rails app upon
+  # initialization.
   #
   # By default every controller action in your entire app is captured and timed.
   # Every metric recorded logs the following info into the metrics log file as
@@ -37,7 +37,7 @@ module HowSlow
   # All timing attributes are in miiliseconds, and stored as a floating point
   # value.
   #
-  # The 'other_runtime' attribute is simply whatever time if leftover from
+  # The 'other_runtime' attribute is simply whatever time is leftover from
   # 'total_runtime' after you subtract 'view_runtime' and 'db_runtime'.
   #
   class Collector < Rails::Engine
@@ -77,8 +77,10 @@ module HowSlow
     # Makes an entry for a named counter event. This method will take care of
     # constructing a Counter metric around the two values you pass in.
     #
-    # `event_name` - the name of the event
-    # `count` - the count at this time
+    # `event_name` - the name of the event - counting the same named event
+    #                repeatedly over time has a cumulative effect - i.e. the total
+    #                count for that event is summed over time
+    # `count` (optional) - how much to count
     #
     def self.count(event_name, count=1)
       metric = HowSlow::Metrics::Counter.new(
