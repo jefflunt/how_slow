@@ -6,7 +6,7 @@ require 'active_support/hash_with_indifferent_access'
 #
 # The metrics are stored as a hash, and available via the metrics attribute.
 #
-# The structure of the metrics hash is:
+# The structure of the resulting metrics hash is:
 #
 #   {
 #     :action => [
@@ -48,8 +48,8 @@ module HowSlow
     end
 
     # Gives you a list of the slowest actions by `measurement`, slowest first,
-    # filtered to metrics recorded between now and `keep_since` time ago, and
-    # further limited to a maximum number of results as specified by by the 
+    # filtered to metrics recorded between `Time.now` and `keep_since` time ago,
+    # and thenfurther limited to a maximum number of results as specified by the 
     # `number_of_actions` argument.
     #
     # So, if you have the following set of metrics...
@@ -66,18 +66,16 @@ module HowSlow
     #   => [{:total_runtime => 456.7, ... },
     #       {:total_runtime => 123.0, ... }]
     #
-    # All attributes that you can sort by are:
-    #   :total_runtime, :db_runtime, :view_runtime, :other_runtime
+    # The attributes that you can sort by are:
+    #   [:total_runtime, :db_runtime, :view_runtime, :other_runtime]
     #
     # Notice that the 'counter' metric type is ignored by this method since the
     # purpose here is to get a list of the slowest actions.
     #
     # The default `number_of_actions` is 5.
     #
-    # The default `keep_since` value is nil, indicating that ALL logged metrics
-    # should be considered. Pass in a value such as 7.days.ago. If you'd prefer
-    # to get the slowest metrics of all time, pass a value of `nil` for this
-    # argument.
+    # The default `keep_since` value is `7.days.ago`, indicating that only actions
+    # in the last week will be included by default.
     # 
     def slowest_actions_by(measurement, number_of_actions=5, keep_since=7.days.ago)
       sorted_metrics = keep_since.nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric.datetime) < keep_since}
@@ -87,7 +85,7 @@ module HowSlow
 
     # Returns an array of all counter event names present in the current set of
     # metrics. For example, if you have recorded named counter events for:
-
+    #
     # 'login'
     # 'new signup'
     # 'new post'
@@ -103,7 +101,7 @@ module HowSlow
     end
 
     # Gives you the sum of the `count` attributes of all Counter metrics with
-    # the specified between now and `keep_since`.
+    # the time range specified between `Time.now` and `keep_since`.
     #
     # So, if you have the following set of metrics...
     #
@@ -119,7 +117,7 @@ module HowSlow
     #
     #   sum_counters_by('user login', nil)
     #   => 5
-    #   sum_counters_by('an unknown event, nil)
+    #   sum_counters_by('an unknown event', nil)
     #   => 0
     #
     # So, this method looks for all counter metrics named 'user login', finds 5
@@ -127,11 +125,12 @@ module HowSlow
     # attributes are 1, then the sum is 5.
     #
     # Similarly, if you pass in the name of a counter event that does't exist
-    # you will get 0.
+    # you will always get 0.
     #
-    # The default `keep_since` is 7.days.ago. If you you'd prefer to get the sum
-    # for a named counter for as far back as your metrics go, then pass `nil`
-    # for this value.
+    # The default `keep_since` is `7.days.ago`. If you you'd prefer to get the
+    # sum for a named counter for as far back as your metrics go, then pass
+    # in `nil` for `keep_since` value.
+    #
     def sum_counters_by(event_name, keep_since=7.days.ago)
       return 0 if event_name.nil?
       filtered_metrics = keep_since.nil? ? @metrics[:counter] : @metrics[:counter].reject{|metric| Time.parse(metric.datetime) < keep_since}
