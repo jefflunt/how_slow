@@ -143,6 +143,21 @@ See `lib/how_slow/reporter.rb` for more examples and documentation on default op
 * `:email_counters_retention` - how far back in time to consider counter metrics for
   the email report, such as `7.days` or `1.month`
 
+**Example configuration:**
+
+In your app's `config/environments/production.rb`, you might use something like the
+options below to send a weekly performance and usage statistics email:
+
+    HowSlow.configure(
+      :email_recipients        => %w(admin@example.com developers@example.com),
+      :email_sender_address    => "how_slow_reporter@example.com",
+      :email_subject           => "Weekly metrics report",
+      :email_actions_retention => 7.days,
+      :email_actions_max       => 100
+    )
+    
+Email is sent via [ActionMailer][8]
+
 [1]: http://en.wikipedia.org/wiki/Federal_Information_Security_Management_Act_of_2002
 [2]: https://github.com/etsy/statsd/
 [3]: http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html#label-Subscribers
@@ -150,6 +165,7 @@ See `lib/how_slow/reporter.rb` for more examples and documentation on default op
 [5]: https://github.com/normalocity/how_slow/blob/master/lib/how_slow/reporter.rb
 [6]: https://www.heroku.com/
 [7]: https://devcenter.heroku.com/articles/read-only-filesystem
+[8]: https://github.com/rails/rails/tree/master/actionmailer
 [9]: http://www.google.com/analytics/
 [10]: https://github.com/normalocity/how_slow/issues/8
 [11]: http://guides.rubyonrails.org/active_record_querying.html
