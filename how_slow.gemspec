@@ -7,6 +7,8 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Collect Rails app performance and usage metrics without relying on 3rd party services or setting up a separate logging server!}
   gem.summary       = %q{Collect Rails performance metrics without 3rd party services or extra servers.}
   gem.homepage      = 'https://github.com/normalocity/how_slow'
+  gem.signing_key   = "#{ENV['GEM_SIGNING_PATH']}/jefflunt-gem-private_key.pem"
+  gem.cert_chain    = "#{ENV['GEM_SIGNING_PATH']}/jefflunt-gem-public_cert.pem"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")

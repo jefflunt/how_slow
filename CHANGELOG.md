@@ -1,4 +1,7 @@
-### v0.3.0
+### v0.3.0.pre
+
+**NOTE:** v0.3.0.pre is currently [failing its Rubinius build](https://travis-ci.org/normalocity/how_slow).
+I'm looking into it.
 
 #### Breaking changes (versus v0.2.x):
 
