@@ -1,24 +1,10 @@
 require 'action_mailer'
 
 class HowSlow::Mailer < ActionMailer::Base
-  # This method expects an `options` hash in the following format (the default
-  # values are shown as examples):
-  #
-  # {
-  #   :subject => "metrics report",
-  #   :actions => {
-  #     :sort_by => :total_runtime,
-  #     :show_measurements => [:total_runtime, :db_runtime, :view_runtime]
-  #     :number_of_actions => 50,
-  #     :retention => 7.days.ago
-  #   },
-  #   :counters => {
-  #     :event_names => nil,                      # the names of counter metrics to include, or `nil` to
-  #                                               # include all of them
-  #     :retention => 7.days.ago
-  #     :sort => :alpha_asc                       # one of (:alpha_asc, :alpha_desc, :numeric_asc, :numeric_desc)
-  #   }
-  # }
+  # Any options passed into this method are merged with the default
+  # options from `lib/how_slow/setup.rb`. The key names in the options
+  # hash must **exactly** match the key names in the gem's configuration
+  # defaults in order to override the defaults.
   #
   # See lib/how_slow/setup.rb for default values
   def metrics_email(options={})
