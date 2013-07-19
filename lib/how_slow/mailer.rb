@@ -22,38 +22,35 @@ class HowSlow::Mailer < ActionMailer::Base
   #
   # See lib/how_slow/setup.rb for default values
   def metrics_email(options={})
-    options = HowSlow::config[:email_options].merge(options)
-    @to = options[:to]
-    @from = options[:from]
-    @subject = options[:subject]
+    options = HowSlow::config.merge(options)
+
+    @from = options[:email_sender_address]
+    @to = options[:email_recipients]
+    @subject = options[:email_subject]
     HashWithIndifferentAccess.new(options) unless options.class == HashWithIndifferentAccess
 
     reporter = HowSlow::Reporter.new
 
     @action_metrics = []
-    if options[:actions]
-      @action_sort_by = options[:actions][:sort_by]
-      @measurements = options[:actions][:show_measurements]
-      number_of_actions = options[:actions][:number_of_actions]
-      @action_keep_since = options[:actions][:retention].ago
-      
-      @action_metrics = reporter.slowest_actions_by(@action_sort_by, number_of_actions, @action_keep_since)
-    end
+    @action_sort_by = options[:email_actions_sort]
+    number_of_actions = action_options[:number_of_actions]
+    @action_keep_since = action_options[:retention].ago
+    
+    @action_metrics = reporter.slowest_actions_by(@action_sort_by, number_of_actions, @action_keep_since)
   
     @counter_metrics = []
-    if options[:counters]
-      event_names = options[:counters][:event_names] || reporter.all_counter_event_names
-      @counter_retention = options[:counters][:retention].ago
 
-      @counter_sort_by = options[:counters][:sort_by]
-      event_names.each{|e| @counter_metrics << reporter.sum_counters_by(e, @counter_retention) }
+    event_names = counter_options[:event_names] || reporter.all_counter_event_names
+    @counter_retention = counter_options[:retention].ago
 
-      case @counter_sort_by
-        when :alpha_asc     then @counter_metrics.sort!{|a, b| a.event_name <=> b.event_name }
-        when :alpha_desc    then @counter_metrics.sort!{|a, b| b.event_name <=> a.event_name }
-        when :numeric_asc   then @counter_metrics.sort!{|a, b| a.count <=> b.count }
-        when :numeric_desc  then @counter_metrics.sort!{|a, b| b.count <=> a.count }
-      end
+    @counter_sort_by = counter_options[:sort_by]
+    event_names.each{|e| @counter_metrics << reporter.sum_counters_by(e, @counter_retention) }
+
+    case @counter_sort_by
+      when :alpha_asc     then @counter_metrics.sort!{|a, b| a.event_name <=> b.event_name }
+      when :alpha_desc    then @counter_metrics.sort!{|a, b| b.event_name <=> a.event_name }
+      when :numeric_asc   then @counter_metrics.sort!{|a, b| a.count <=> b.count }
+      when :numeric_desc  then @counter_metrics.sort!{|a, b| b.count <=> a.count }
     end
 
     mail

@@ -45,7 +45,7 @@ module HowSlow
 
     initializer "railtie.configure_rails_initialization" do |app|
       case HowSlow.config[:storage]
-      when :log_file then Collector.setup_log_storage_and_reporting
+        when :log_file then Collector.setup_log_storage_and_reporting
       end
     end
 

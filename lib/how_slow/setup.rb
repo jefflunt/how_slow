@@ -4,38 +4,19 @@ module HowSlow
     :event_subscriptions => [/process_action.action_controller/],
     :logger_filename => "metrics.log",
     :storage => :log_file,
-    :email_options => {
-      :to => nil,
-      :from => nil,
-      :subject => "metrics report",
-      :actions => {
-        :sort_by => :total_runtime,
-        :show_measurements => [:total_runtime, :db_runtime, :view_runtime],
-        :number_of_actions => 50,
-        :retention => 7.days
-      },
-      :counters => {
-        :event_names => nil,  # all event names
-        :sort_by => :alpha_asc,
-        :retention => 7.days
-      }
-    }
+
+    :email_sender_address => nil,
+    :email_recipients => nil,
+    :email_subject => "metrics report",
+    :email_actions_sort => :total_runtime,
+    :email_actions_max => 50,
+    :email_actions_retention => 7.days,
+    :email_counters_evants => nil, #all events collected
+    :email_counters_sort => :alpha_asc,
+    :email_counters_retention => 7.days
   }
 
   @valid_config_keys = @config.keys
-
-  # Currently supported configuration options:
-  #
-  # :event_subscriptions - the list of patterns that will be captured be default
-  # by the collector
-  #
-  # :logger_filename - the name of the file to which collected metrics will be
-  # written. If this is set to "metrics.log" (the default), then the file will
-  # be written to `#{Rails.root}/log/metrics.log`
-  #
-  def self.configure(opts = {})
-    opts.each {|k,v| @config[k.to_sym] = v if @valid_config_keys.include? k.to_sym}
-  end
 
   # Returns a hash of the gem's configuration options.
   #
