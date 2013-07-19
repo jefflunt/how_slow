@@ -11,7 +11,7 @@ module HowSlow
     :email_actions_sort => :total_runtime,
     :email_actions_max => 50,
     :email_actions_retention => 7.days,
-    :email_counters_evants => nil, #all events collected
+    :email_counters_events => nil, #all events collected
     :email_counters_sort => :alpha_asc,
     :email_counters_retention => 7.days
   }
