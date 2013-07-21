@@ -7,6 +7,26 @@ class HowSlow::Mailer < ActionMailer::Base
   # defaults in order to override the defaults.
   #
   # See lib/how_slow/setup.rb for default values
+  #
+  # This method makes the following variables available to the view:
+  #
+  # @action_metrics - an array of HowSlow::Metrics::Action instances
+  # @action_sort_by - the option being used to sort the action metrics
+  # @action_retention - the maximum age of an Action metric that will show up in
+  #                     @action_metrics - something like 7.days.ago
+  # @counter_metrics - NOT an array of HowSlow::Metrics::Counter (I should
+  #                    probably rename it), but instead an Array of Arrays
+  #                    containing the counter name and its value. E.g.:
+  #
+  #                    [['logins', 123],
+  #                     ['items_purchased', 15],
+  #                     ['views', 1092]]
+  # @counter_sort_by - the option being used to sort the counter metrics
+  # @counter_retention - the maximum age of a Counter metric that will show up
+  #                      @counter_metrics - something like 7.days.ago
+  #
+  # See app/views/how_slow/mailer/metrics_email.txt.erb for an example of how
+  #     these are being used.
   def metrics_email(options={})
     options = HowSlow::config.merge(options)
 
@@ -20,7 +40,7 @@ class HowSlow::Mailer < ActionMailer::Base
     @action_metrics = []
     @action_sort_by = options[:email_actions_sort]
     number_of_actions = options[:email_actions_max]
-    @action_keep_since = options[:email_actions_retention].ago
+    @action_retention = options[:email_actions_retention].ago
     
     @action_metrics = reporter.slowest_actions_by(@action_sort_by, number_of_actions, @action_keep_since)
   
@@ -32,7 +52,6 @@ class HowSlow::Mailer < ActionMailer::Base
     @counter_sort_by = options[:email_counters_sort]
     event_names.each{|e| @counter_metrics << [e, reporter.sum_counters_by(e, @counter_retention)] }
 
-binding.pry
     case @counter_sort_by
       when :alpha_asc     then @counter_metrics.sort!{|a, b| a[0] <=> b[0] }
       when :alpha_desc    then @counter_metrics.sort!{|a, b| b[0] <=> a[0] }
