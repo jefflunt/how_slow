@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://github.com/normalocity/how_slow'
   gem.signing_key   = "#{ENV['GEM_SIGNING_PATH']}/jefflunt-gem-private_key.pem"
   gem.cert_chain    = "#{ENV['GEM_SIGNING_PATH']}/jefflunt-gem-public_cert.pem"
+  gem.license       = 'MIT'
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
