@@ -1,5 +1,7 @@
 Slowest <%= @action_metrics.count %> requests, sorted by <%= @action_sort_by %>:
 --------------------
+datetime :: controller/action    total / db / view / other in milliseconds
+--------------------
 <% @action_metrics.each do |am| %>
 <%= am.to_default_email_string %>
 <% end %>

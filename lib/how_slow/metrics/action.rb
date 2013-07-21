@@ -45,7 +45,7 @@ module HowSlow
       # e.g. 2013-05-02T18:24:51+00:00 :: /login/new    1409 / 272 / 1099
       #
       def to_default_email_string
-        "#{datetime} :: #{params['controller']}/#{params['action']}\t#{total_runtime.to_i} / #{db_runtime.to_i} / #{view_runtime.to_i}"
+        "#{datetime} :: #{params['controller']}/#{params['action']}\t#{total_runtime.to_i} / #{db_runtime.to_i} / #{view_runtime.to_i} / #{other_runtime.to_i} "
       end
 
       # A JSON version of this action metric
