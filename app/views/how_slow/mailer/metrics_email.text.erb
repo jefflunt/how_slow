@@ -8,5 +8,5 @@ Slowest <%= @action_metrics.count %> requests, sorted by <%= @action_sort_by %>:
 Counters sorted by <%= @counter_sort_by %>:
 --------------------
 <% @counter_metrics.each do |cm| %>
-<%= cm.to_default_email_string %>
+<%= cm[0] %>: <%= cm[1] %>
 <% end %>

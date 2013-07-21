@@ -30,13 +30,14 @@ class HowSlow::Mailer < ActionMailer::Base
     @counter_retention = options[:email_counters_retention].ago
 
     @counter_sort_by = options[:email_counters_sort]
-    event_names.each{|e| @counter_metrics << reporter.sum_counters_by(e, @counter_retention) }
+    event_names.each{|e| @counter_metrics << [e, reporter.sum_counters_by(e, @counter_retention)] }
 
+binding.pry
     case @counter_sort_by
-      when :alpha_asc     then @counter_metrics.sort!{|a, b| a.event_name <=> b.event_name }
-      when :alpha_desc    then @counter_metrics.sort!{|a, b| b.event_name <=> a.event_name }
-      when :numeric_asc   then @counter_metrics.sort!{|a, b| a.count <=> b.count }
-      when :numeric_desc  then @counter_metrics.sort!{|a, b| b.count <=> a.count }
+      when :alpha_asc     then @counter_metrics.sort!{|a, b| a[0] <=> b[0] }
+      when :alpha_desc    then @counter_metrics.sort!{|a, b| b[0] <=> a[0] }
+      when :numeric_asc   then @counter_metrics.sort!{|a, b| a[1] <=> b[1] }
+      when :numeric_desc  then @counter_metrics.sort!{|a, b| b[1] <=> a[1] }
     end
 
     mail(:from => sender, :to => recipients, :subject => subject)
