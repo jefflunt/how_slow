@@ -1,3 +1,3 @@
 module HowSlow
-  VERSION = '0.3.0.pre' unless const_defined?(:VERSION)
+  VERSION = '0.3.0.pre.2' unless const_defined?(:VERSION)
 end
