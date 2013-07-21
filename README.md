@@ -18,14 +18,14 @@ Want to run the tests yourself?
 
 ## Reasons to use `how_slow`
 
+* You want a solution that doesn't rely on a 3rd party, simplifying your
+  application dependencies.
 * You're in an environment where the risk of sensitive data accidentally being
   leaked to a 3rd party service is unacceptable. So, you can't use [NewRelic][4].
-* You want a solution that doesn't rely on a 3rd party at all, simplifying your
-  application dependencies.
 * You don't need all the fancy charts and graphs of [NewRelic][4] and you're
   not afraid of editing some simple config files to get *just* the metrics you
   want.
-* The idea of setting up and maintaingin a [statsd][2] server, along with a
+* The idea of setting up and maintaining a [statsd][2] server, along with a
   graphing/charting software stack, just to display your statistics sounds like
   a waste of time.
 * 99% of your needs could be fulfilled by a simple, weekly email that lists your
