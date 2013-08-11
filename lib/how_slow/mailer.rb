@@ -2,11 +2,7 @@ require 'action_mailer'
 
 class HowSlow::Mailer < ActionMailer::Base
   # Any options passed into this method are merged with the default
-  # options from `lib/how_slow/setup.rb`. The key names in the options
-  # hash must **exactly** match the key names in the gem's configuration
-  # defaults in order to override the defaults.
-  #
-  # See lib/how_slow/setup.rb for default values
+  # options from `lib/how_slow/setup.rb`. 
   #
   # This method makes the following variables available to the view:
   #
