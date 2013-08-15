@@ -1,12 +1,11 @@
 ### v0.3.0.pre
 
-**NOTE:** v0.3.0.pre is currently [failing its Rubinius build](https://travis-ci.org/normalocity/how_slow).
-I'm looking into it.
+**NOTE:** v0.3.0.x+ is no longer built against Rubinius.
 
 #### Breaking changes (versus v0.2.x):
 
 * Refactored the `HowSlow::config` options - you will **definitely**
-  [want to take a look at the new structure], 
+  [want to take a look at the new structure](https://github.com/jefflunt/how_slow/blob/master/lib/how_slow/setup.rb#L3), 
   as they are very likely to break your previous use of `HowSlow 0.2.0`
 * Possible breakage of Rails 4 support. More specifically I changed the
   `how_slow.gemspec` file to **exclude** Rails 4 support (for now)
