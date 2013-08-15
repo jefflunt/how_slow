@@ -5,7 +5,7 @@
 #### Breaking changes (versus v0.2.x):
 
 * Refactored the `HowSlow::config` options - you will **definitely**
-  [want to take a look at the new structure](https://github.com/jefflunt/how_slow/blob/master/lib/how_slow/setup.rb#L3), 
+  [want to take a look at the new structure](https://github.com/jefflunt/how_slow/blob/v0.3.0.pre.6/lib/how_slow/setup.rb#L3), 
   as they are very likely to break your previous use of `HowSlow 0.2.0`
 * Possible breakage of Rails 4 support. More specifically I changed the
   `how_slow.gemspec` file to **exclude** Rails 4 support (for now)
