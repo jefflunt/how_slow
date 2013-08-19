@@ -5,20 +5,18 @@ services or setting up a separate logging server.
 
 ===================
 
-* README *for v0.3.0*
-* `how_slow` uses [Semantic Versioning](http://semver.org/)
-* This gem now has a [mailing list](https://groups.google.com/forum/#!forum/how_slow-gem)
-for questions and support issues. Verified bugs should be opened directly on
-github.
+**The basics**
+
+* This is the **README** *for v0.3.0*
+* `how_slow` uses **[Semantic Versioning](http://semver.org/)**
+* This gem now has a **[mailing list](https://groups.google.com/forum/#!forum/how_slow-gem)**
+for questions and support issues
+* Verified **bugs** should be [opened directly on github](https://github.com/jefflunt/how_slow/issues)
+* **Install** - `gem 'how_slow'`
+* *Development ests* - `rake test`
+* `how_slow` is [built against several ruby implementations](https://travis-ci.org/jefflunt/how_slow). See `.travis.yml`
 
 ===================
-
-Run the tests
-
-    bundle install
-    bundle exec rake test
-
-`how_slow` is built against several ruby implementations. See `.travis.yml`
 
 ## Reasons to use `how_slow`
 
@@ -35,12 +33,7 @@ Run the tests
 * 99% of your needs could be fulfilled by a simple, weekly email that lists your
   slowest controller actions and your most used features.
 
-## Install
-
-    # Gemfile
-    gem 'how_slow'
-
-## Storage
+## Metrics Storage
 
 ### Performance stats
 
@@ -74,7 +67,7 @@ Specify an optional number parameter to count up or down by any whole number:
     HowSlow::Collector::count('total_items_ordered', 3)
     HowSlow::Collector::count('total_items_returned', 2)
 
-## Retrieval
+## Metrics Retrieval
 
 ### Via email:
 
