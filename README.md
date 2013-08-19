@@ -1,15 +1,11 @@
 # how_slow
 
-*for v0.3.0.pre.4* :: `how_slow` uses [Semantic Versioning](http://semver.org/)
+*for v0.3.0.pre.6* :: `how_slow` uses [Semantic Versioning](http://semver.org/)
 
 Collect Rails app performance and usage metrics without relying on 3rd party
 services or setting up a separate logging server.
 
-#### travis-ci build status:
-
-[![Build Status](https://travis-ci.org/normalocity/how_slow.png?branch=master)](https://travis-ci.org/normalocity/how_slow)
-
-Want to run the tests yourself?
+Run the tests
 
     bundle install
     bundle exec rake test
