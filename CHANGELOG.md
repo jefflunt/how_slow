@@ -1,4 +1,4 @@
-### v0.3.0.pre
+### v0.3.0
 
 **NOTE:** v0.3.x is no longer built against Rubinius.
 
