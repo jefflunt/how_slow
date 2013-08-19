@@ -1,9 +1,17 @@
 # how_slow
 
-*for v0.3.0* :: `how_slow` uses [Semantic Versioning](http://semver.org/)
-
 Collect Rails app performance and usage metrics without relying on 3rd party
 services or setting up a separate logging server.
+
+===================
+
+* README *for v0.3.0*
+* `how_slow` uses [Semantic Versioning](http://semver.org/)
+* This gem now has a [mailing list](https://groups.google.com/forum/#!forum/how_slow-gem)
+for questions and support issues. Verified bugs should be opened directly on
+github.
+
+===================
 
 Run the tests
 
