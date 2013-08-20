@@ -78,6 +78,39 @@ Specify an optional number parameter to count up or down by any whole number:
     # in code - this allows you to override the defaults in your
     # environment file
     HowSlow::Mailer.metrics_email(options)
+    
+A sample of a real email generated from this:
+
+```text
+Slowest 100 requests, sorted by total_runtime:
+--------------------
+datetime :: controller/action    total / db / view / other in milliseconds
+--------------------
+2013-08-12T15:47:46+00:00 :: sections/show      2355 / 92 / 1693 / 569
+2013-08-12T15:45:35+00:00 :: sections/show      1276 / 57 / 913 / 305
+2013-08-11T00:03:20+00:00 :: log_books/index    598 / 10 / 585 / 2
+2013-08-17T12:38:52+00:00 :: sections/show      469 / 51 / 409 / 7
+2013-08-14T21:24:01+00:00 :: sections/show      460 / 20 / 431 / 7
+2013-08-14T05:40:08+00:00 :: sections/show      459 / 32 / 419 / 7
+2013-08-17T12:38:53+00:00 :: sections/show      458 / 35 / 415 / 7
+2013-08-13T03:42:57+00:00 :: sections/show      408 / 27 / 337 / 43
+2013-08-13T01:24:11+00:00 :: sections/show      392 / 22 / 362 / 7
+2013-08-15T01:37:02+00:00 :: sections/show      387 / 40 / 339 / 7
+
+...(summarized)...
+
+Counters sorted by alpha_asc:
+--------------------
+views.homepage: 2226
+views.login.total: 2
+views.sections.show.by-user.anonymous: 73
+views.sections.show.by-provider.facebook: 3
+views.sections.show.total: 76
+```
+
+You can name your counters whatever you like, but since I like to get my sorted by
+alphebetical order, ascending, I name them as if they were namespaces, in order to
+group similar counter metrics together.
 
 * See the `lib/how_slow/mailer.rb` class for which options are availble. It's
   possible to specify the number of metrics reported, the sort order, and how
