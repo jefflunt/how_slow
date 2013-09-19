@@ -2,7 +2,11 @@
 
 ### Breaking changes (versus v0.3.x):
 
-- None.
+- `Reporter#slowest_actions_by` method now takes an options hash for optional
+  parameters. See [#18](https://github.com/jefflunt/how_slow/issues/18) If
+  you're calling this method directly in your code anywhere (in a rake task, or
+  in your own reporting method, for example), then you'll want to audit your
+  usage to use a hash.
 
 ### Other code changes
 
