@@ -77,10 +77,13 @@ module HowSlow
     # The default `retention` value is `7.days.ago`, indicating that only actions
     # in the last week will be included by default.
     # 
-    def slowest_actions_by(measurement, number_of_actions=5, retention=7.days.ago)
-      sorted_metrics = retention.nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric.datetime) < retention}
+    def slowest_actions_by(measurement, options={})
+      default_options = HashWithIndifferentAccess.new({number_of_actions: 5, retention: 7.days.ago})
+      options = default_options.merge(options)
+
+      sorted_metrics = options[:retention].nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric.datetime) < options[:retention]}
       sorted_metrics = sorted_metrics.sort_by{|action| -action.try(measurement)}
-      sorted_metrics = (number_of_actions.nil? ? sorted_metrics : sorted_metrics[0..number_of_actions-1])
+      sorted_metrics = (options[:number_of_actions].nil? ? sorted_metrics : sorted_metrics[0..options[:number_of_actions]-1])
     end
 
     # Returns an array of all counter event names present in the current set of
