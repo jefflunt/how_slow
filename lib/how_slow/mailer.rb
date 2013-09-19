@@ -38,7 +38,7 @@ class HowSlow::Mailer < ActionMailer::Base
     number_of_actions = options[:email_actions_max]
     @action_retention = options[:email_actions_retention].ago
     
-    @action_metrics = reporter.slowest_actions_by(@action_sort_by, number_of_actions, @action_retention)
+    @action_metrics = reporter.slowest_actions_by(@action_sort_by, { :number_of_actions => number_of_actions, :retention => @action_retention})
   
     @counter_metrics = []
 

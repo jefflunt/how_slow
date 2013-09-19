@@ -127,7 +127,6 @@ class ReporterTest < MiniTest::Unit::TestCase
       end
     end #slowst_actions_by context
 
-# TODO: Alter this context to use the options hash
     context '#sum_counters_by' do
       context 'with various event_name values' do
         it 'when event_name is nil the sum returned is always zero' do

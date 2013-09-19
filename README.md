@@ -126,7 +126,7 @@ See `lib/how_slow/reporter.rb` for more examples and documentation on default op
     reporter.slowest_actions_by(:total_runtime)
     => [HowSlow::Metrics::Action<# >, ...]   # sorted by #total_runtime, DESC
     
-    reporter.slowest_actions_by(:db_runtime, 50, 1.month.ago)
+    reporter.slowest_actions_by(:db_runtime, { :number_of_actions => 50, :retention => 1.month.ago})
     => [HowSlow::Metrics::Action<# >, ...]   # the 50 longest DB actions in the last month
     
     reporter.sum_counters_by('user_login')   # retrieve the value of any counter
