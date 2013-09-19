@@ -1,6 +1,6 @@
 ### v0.4.0
 
-### Breaking changes (versus v0.3.x):
+#### Breaking changes (versus v0.3.x):
 
 - `Reporter#slowest_actions_by` method now takes an options hash for optional
   parameters. See [#18](https://github.com/jefflunt/how_slow/issues/18) If
@@ -8,7 +8,7 @@
   in your own reporting method, for example), then you'll want to audit your
   usage to use a hash.
 
-### Other code changes
+#### Other code changes
 
 - `'keep_since' => 'retention`
   The use of the name `keep_since` to denote a retention period, or a period of
