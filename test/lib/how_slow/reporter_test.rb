@@ -94,35 +94,35 @@ class ReporterTest < MiniTest::Unit::TestCase
           assert_equal 5, @reporter.slowest_actions_by(:total_runtime).size
         end
 
-        it 'when number_of_actions is nil all metrics within the default keep_since threshold will be returned' do
+        it 'when number_of_actions is specified as nil then all metrics within the default retention threshold will be returned' do
           # Assuming a total number of 10 action metrics in the file
-          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, nil).size
+          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, { :number_of_actions => nil }).size
         end
 
         it 'when number_of_actions is 2 you will get no more than 2 metrics back' do
-          assert_equal 2, @reporter.slowest_actions_by(:total_runtime, 2).size
+          assert_equal 2, @reporter.slowest_actions_by(:total_runtime, { :number_of_actions => 2 }).size
         end
 
         it 'when number_of_actions exceeds the total number of action metrics then all action metrics will be returned' do
-          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, 9999).size
+          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, { :number_of_actions => 9999 }).size
         end
       end
 
-      context 'with various keep_since values' do
-        it 'the keep_since argument will default to 7.days.ago' do
-          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, nil).size
+      context 'with various retention values' do
+        it 'the retention argument will default to 7.days.ago' do
+          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, { :number_of_actions => nil }).size
         end
 
-        it 'when keep_since is nil all action metrics will be returned' do
-          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, nil, nil).size
+        it 'when retention is nil all action metrics will be returned' do
+          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, { :number_of_actions => nil, :retention => nil }).size
         end
 
-        it 'when keep_since is set to 5.minutes.ago then only action metrics newer than that will be returned' do
-          assert_equal 5, @reporter.slowest_actions_by(:total_runtime, nil, 5.minutes.ago).size
+        it 'when retention is set to 5.minutes.ago then only action metrics newer than that will be returned' do
+          assert_equal 5, @reporter.slowest_actions_by(:total_runtime, { :number_of_actions => nil, :retention => 5.minutes.ago }).size
         end
 
-        it 'when keep_since exceeds the maximum age of the oldest action metric then all action metrics are returned' do
-          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, nil, 1000.years.ago).size
+        it 'when retention exceeds the maximum age of the oldest action metric then all action metrics are returned' do
+          assert_equal 10, @reporter.slowest_actions_by(:total_runtime, { :number_of_actions => nil, :retention => 1000.years.ago }).size
         end
       end
     end #slowst_actions_by context
@@ -142,7 +142,7 @@ class ReporterTest < MiniTest::Unit::TestCase
         end
       end
 
-      context 'with various keep_since values' do
+      context 'with various retention values' do
         it 'defaults to 7.days.ago' do
           assert_equal 35, @reporter.sum_counters_by('some count')
         end
