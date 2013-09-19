@@ -47,10 +47,10 @@ module HowSlow
       end
     end
 
-    # Gives you a list of the slowest actions by `measurement`, slowest first,
-    # filtered to metrics recorded between `Time.now` and `retention` time ago,
-    # and thenfurther limited to a maximum number of results as specified by the 
-    # `number_of_actions` argument.
+    # Gives you a list of the slowest actions by 'measurement', slowest first,
+    # filtered to metrics recorded between 'Time.now' and 'retention' time ago,
+    # and then further limited to a maximum number of results as specified by the 
+    # 'number_of_actions' argument.
     #
     # So, if you have the following set of metrics...
     #
@@ -62,7 +62,7 @@ module HowSlow
     # 
     # ...then
     #
-    #   slowest_actions_by(:total_runtime, 2)
+    #   slowest_actions_by(:total_runtime, { :number_of_actions => 2 })
     #   => [{:total_runtime => 456.7, ... },
     #       {:total_runtime => 123.0, ... }]
     #
@@ -72,13 +72,13 @@ module HowSlow
     # Notice that the 'counter' metric type is ignored by this method since the
     # purpose here is to get a list of the slowest actions.
     #
-    # The default `number_of_actions` is 5.
+    # The default 'number_of_actions' is 5.
     #
-    # The default `retention` value is `7.days.ago`, indicating that only actions
+    # The default 'retention' value is '7.days.ago', indicating that only actions
     # in the last week will be included by default.
     # 
     def slowest_actions_by(measurement, options={})
-      default_options = HashWithIndifferentAccess.new({number_of_actions: 5, retention: 7.days.ago})
+      default_options = HashWithIndifferentAccess.new({:number_of_actions => 5, :retention => 7.days.ago})
       options = default_options.merge(options)
 
       sorted_metrics = options[:retention].nil? ? @metrics[:action] : @metrics[:action].reject{|metric| Time.parse(metric.datetime) < options[:retention]}
