@@ -7,13 +7,11 @@ services or setting up a separate logging server.
 
 **The basics**
 
-* This is the **README** *for v0.3.0*
+* This is the **README** *for v0.4.0.pre*
 * `how_slow` uses **[Semantic Versioning](http://semver.org/)**
-* This gem now has a **[mailing list](https://groups.google.com/forum/#!forum/how_slow-gem)**
-for questions and support issues
 * Verified **bugs** should be [opened directly on github](https://github.com/jefflunt/how_slow/issues)
 * **Install** - `gem 'how_slow'`
-* *Development ests* - `rake test`
+* *Development tests* - `rake test`
 * `how_slow` is [built against several ruby implementations](https://travis-ci.org/jefflunt/how_slow). See `.travis.yml`
 
 ===================
