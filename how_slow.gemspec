@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["jefflunt@gmail.com"]
   gem.description   = %q{A gem for collecting Rails application metrics. No server or 3rd party services required.}
   gem.summary       = %q{Collect Rails performance metrics without 3rd party services or extra servers.}
-  gem.homepage      = 'https://github.com/normalocity/how_slow'
+  gem.homepage      = 'https://github.com/jefflunt/how_slow'
   gem.license       = 'MIT'
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
