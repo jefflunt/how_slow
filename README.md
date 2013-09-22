@@ -7,7 +7,7 @@ services or setting up a separate logging server.
 
 **The basics**
 
-* This is the **README** *for v0.4.0.pre*
+* This is the **README** *for v0.4.0*
 * `how_slow` uses **[Semantic Versioning](http://semver.org/)**
 * Verified **bugs** should be [opened directly on github](https://github.com/jefflunt/how_slow/issues)
 * **Install** - `gem 'how_slow'`
