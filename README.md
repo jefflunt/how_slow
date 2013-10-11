@@ -7,11 +7,10 @@ services or setting up a separate logging server.
 
 **The basics**
 
-* This is the **README** *for v0.4.0*
-* `how_slow` uses **[Semantic Versioning](http://semver.org/)**
-* Verified **bugs** should be [opened directly on github](https://github.com/jefflunt/how_slow/issues)
-* **Install** - `gem 'how_slow'`
-* *Development tests* - `rake test`
+* This is the `README` *for v0.4.0*
+* `how_slow` uses [Semantic Versioning](http://semver.org/)
+* Verified bugs should be [opened directly on github](https://github.com/jefflunt/how_slow/issues)
+* Run tests with `rake test`
 * `how_slow` is [built against several ruby implementations](https://travis-ci.org/jefflunt/how_slow). See `.travis.yml`
 
 ===================
@@ -106,7 +105,7 @@ views.sections.show.by-provider.facebook: 3
 views.sections.show.total: 76
 ```
 
-You can name your counters whatever you like, but since I like to get my sorted by
+You can name your counters whatever you like, but since I like to get mine sorted by
 alphebetical order, ascending, I name them as if they were namespaces, in order to
 group similar counter metrics together.
 
@@ -137,14 +136,13 @@ See `lib/how_slow/reporter.rb` for more examples and documentation on default op
 
 **Basic options:**
 
-* `:event_subscriptions` - an array of regex patters used to match actions. For
+* `:event_subscriptions` - an array of regex patterns used to match actions. For
   more on how that works, see the documentation on
   [ActiveSupport::Notifications Subscribers][3]. `how_slow` will default to
   tracking **all** controller actions automatically if you don't explicitly set
   this option.
 * `:logger_filename` - the name of the file used to write metrics data. The
-  default is `metrics.log`, which winds up placing the file under
-  `"#{Rails.root}/log/metrics.log"`
+  default is `metrics.log`, which winds up in `"#{Rails.root}/log/metrics.log"`
 * `:storage` - the storage method. Right now the default (and only option) is
   `:log_file`, however support for collecting metrics into your database via an
   `:active_record` option [has been requested][10]. That means being able to
