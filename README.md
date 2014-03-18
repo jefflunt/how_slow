@@ -1,6 +1,6 @@
 # how_slow
 
-NOTICE: This project defunct. I recommend something else, like  [https://github.com/wvanbergen/request-log-analyzer](request-log-analyzer) as a replacement. It's quite powerful, customizable to your own logging format, and well supported.
+**NOTICE**: This project defunct. I recommend something else, like  [https://github.com/wvanbergen/request-log-analyzer](request-log-analyzer) as a replacement. It's quite powerful, customizable to your own logging format, and well supported.
 
 ===================
 
