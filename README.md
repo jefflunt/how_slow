@@ -1,5 +1,9 @@
 # how_slow
 
+NOTICE: This project defunct. I recommend something else, like  [https://github.com/wvanbergen/request-log-analyzer](request-log-analyzer) as a replacement. It's quite powerful, customizable to your own logging format, and well supported.
+
+===================
+
 Collect Rails app performance and usage metrics without relying on 3rd party
 services or setting up a separate logging server.
 
