@@ -1,6 +1,6 @@
 # how_slow
 
-**NOTICE**: This project defunct. I recommend something else, like  [request-log-analyzer](https://github.com/wvanbergen/request-log-analyzer) as a replacement. It's quite powerful, customizable to your own logging format, and well supported.
+**NOTICE**: This project defunct, and all versions have been yanked from rubygems.org. The code remains here only so you can install it by hand if you really need to do so. I recommend something else, like  [request-log-analyzer](https://github.com/wvanbergen/request-log-analyzer) as a replacement. It's quite powerful, customizable to your own logging format, and well supported.
 
 ===================
 
